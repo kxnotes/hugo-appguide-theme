@@ -1,0 +1,25 @@
+name: 'AppGuide'
+license: 'MIT'
+licenselink: 'https://github.com/yourusername/hugo-appguide/blob/main/LICENSE'
+description: 'A modern, responsive Hugo theme for app documentation and guides'
+homepage: 'https://github.com/yourusername/hugo-appguide'
+tags:
+  - app
+  - documentation
+  - guides
+  - responsive
+  - modern
+  - multilingual
+features:
+  - Responsive design
+  - App download center
+  - Tutorial system
+  - FAQ section
+  - Search functionality
+  - Multiple content types
+  - Customizable
+min_version: '0.112.0'
+
+author:
+  name: 'Your Name'
+  homepage: 'https://yourwebsite.com'

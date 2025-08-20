@@ -1,0 +1,4 @@
+<div class="info-box">
+    <h4>ℹ️ {{ .Get "title" | default "信息" }}</h4>
+    {{ .Inner | markdownify }}
+</div>

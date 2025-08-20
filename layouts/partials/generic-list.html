@@ -1,0 +1,42 @@
+<!-- 通用列表页面 -->
+<div class="generic-list">
+    {{ if .Pages }}
+    <div class="list-grid">
+        {{ range .Pages }}
+        <article class="list-item">
+            <div class="item-meta">
+                <time class="item-date">{{ .Date.Format "2006-01-02" }}</time>
+                {{ with .Params.categories }}
+                <span class="item-category">{{ index . 0 }}</span>
+                {{ end }}
+            </div>
+            <h2 class="item-title">
+                <a href="{{ .Permalink }}">{{ .Title }}</a>
+            </h2>
+            {{ with .Summary }}
+            <p class="item-summary">{{ . | truncate 200 }}</p>
+            {{ end }}
+            <div class="item-footer">
+                {{ with .Params.tags }}
+                <div class="item-tags">
+                    {{ range first 3 . }}
+                    <span class="tag">{{ . }}</span>
+                    {{ end }}
+                </div>
+                {{ end }}
+                <span class="read-more">
+                    <a href="{{ .Permalink }}">阅读更多 →</a>
+                </span>
+            </div>
+        </article>
+        {{ end }}
+    </div>
+    {{ else }}
+    <div class="empty-state">
+        <div class="empty-icon">📄</div>
+        <h3>暂无内容</h3>
+        <p>这个分类下还没有文章，请稍后再来查看。</p>
+        <a href="/guides/" class="back-link">← 返回教程中心</a>
+    </div>
+    {{ end }}
+</div>

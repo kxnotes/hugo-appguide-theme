@@ -1,0 +1,24 @@
+<!-- 导航栏 -->
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <a href="{{ .Site.BaseURL }}" class="no-underline">
+                <h2 class="text-primary-600 text-xl font-bold">{{ .Site.Params.app.name | default .Site.Title }}</h2>
+            </a>
+        </div>
+        <ul class="nav-menu">
+            {{ range .Site.Menus.main }}
+            <li>
+                <a href="{{ .URL }}" class="nav-link{{ if $.IsMenuCurrent "main" . }} active{{ end }}">
+                    {{ .Name }}
+                </a>
+            </li>
+            {{ end }}
+        </ul>
+        <div class="hamburger" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</nav>

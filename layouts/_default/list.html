@@ -1,0 +1,36 @@
+{{ define "main" }}
+<div class="main-content">
+    <div class="container">
+        <div class="page-header">
+            <h1>{{ .Title }}</h1>
+            {{ with .Description }}
+            <p class="page-subtitle">{{ . }}</p>
+            {{ end }}
+        </div>
+
+        {{ if eq .Section "guides" }}
+        <!-- 教程页面特殊布局 -->
+        {{ partial "guides-list.html" . }}
+        {{ else if eq .Section "faq" }}
+        <!-- FAQ 页面特殊布局 -->
+        {{ partial "faq-list.html" . }}
+        {{ else }}
+        <!-- 通用列表布局 -->
+        {{ partial "generic-list.html" . }}
+        {{ end }}
+
+        <!-- 自定义内容 -->
+        {{ .Content }}
+    </div>
+</div>
+{{ end }}
+
+{{ define "scripts" }}
+{{ if eq .Section "guides" }}
+{{ $guidesScript := resources.Get "js/guides.js" | resources.Minify }}
+<script src="{{ $guidesScript.Permalink }}"></script>
+{{ else if eq .Section "faq" }}
+{{ $faqScript := resources.Get "js/faq.js" | resources.Minify }}
+<script src="{{ $faqScript.Permalink }}"></script>
+{{ end }}
+{{ end }}

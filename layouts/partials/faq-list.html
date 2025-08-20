@@ -1,0 +1,147 @@
+<!-- FAQ 列表页面 -->
+<div class="faq-list">
+    <!-- 搜索框 -->
+    <div class="faq-search">
+        <div class="search-box">
+            <input type="text" id="faqSearchInput" placeholder="搜索问题..." />
+            <span class="search-icon">🔍</span>
+        </div>
+    </div>
+
+    <!-- 快速导航 -->
+    <div class="faq-categories">
+        <button class="category-btn active" data-category="all">全部问题</button>
+        <button class="category-btn" data-category="installation">安装问题</button>
+        <button class="category-btn" data-category="connection">连接问题</button>
+        <button class="category-btn" data-category="configuration">配置问题</button>
+        <button class="category-btn" data-category="performance">性能问题</button>
+        <button class="category-btn" data-category="troubleshooting">故障排除</button>
+    </div>
+
+    <!-- FAQ 内容 -->
+    <div class="faq-content">
+        <!-- 安装问题 -->
+        <div class="faq-section" data-category="installation">
+            <h2 class="section-title">
+                <span class="section-icon">📦</span>
+                安装问题
+            </h2>
+            
+            <div class="faq-item" data-category="installation">
+                <div class="faq-question">
+                    <h3>Windows Defender 一直报毒怎么办？</h3>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>这是常见的误报问题，您可以通过以下方式解决：</p>
+                    <ol>
+                        <li><strong>添加到白名单：</strong>打开 Windows Defender，进入"病毒和威胁防护" > "管理设置" > "添加或删除排除项"，将 {{ .Site.Params.app.name }} 的安装目录添加到排除列表。</li>
+                        <li><strong>重新下载：</strong>确保从官方 GitHub 页面下载最新版本。</li>
+                        <li><strong>验证文件完整性：</strong>使用 SHA256 校验和验证下载的文件是否完整。</li>
+                        <li><strong>临时关闭实时保护：</strong>在安装过程中临时关闭 Windows Defender 的实时保护功能。</li>
+                    </ol>
+                    <div class="tip-box">
+                        <p><strong>提示：</strong>{{ .Site.Params.app.name }} 是完全开源的软件，您可以在 GitHub 上查看源代码以确认其安全性。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="installation">
+                <div class="faq-question">
+                    <h3>macOS 提示"无法打开，因为无法验证开发者"怎么办？</h3>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>这是 macOS 的安全机制，解决方法如下：</p>
+                    <ol>
+                        <li>右键点击 {{ .Site.Params.app.name }} 应用，选择"打开"</li>
+                        <li>在弹出的对话框中点击"打开"</li>
+                        <li>或者进入"系统偏好设置" > "安全性与隐私" > "通用"，点击"仍要打开"</li>
+                    </ol>
+                    <p><strong>对于 Apple Silicon Mac：</strong></p>
+                    <ul>
+                        <li>确保下载的是 Apple Silicon 版本</li>
+                        <li>如果仍有问题，可以在终端中运行：<code>sudo xattr -rd com.apple.quarantine /Applications/HiddifyNext.app</code></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 连接问题 -->
+        <div class="faq-section" data-category="connection">
+            <h2 class="section-title">
+                <span class="section-icon">🌐</span>
+                连接问题
+            </h2>
+
+            <div class="faq-item" data-category="connection">
+                <div class="faq-question">
+                    <h3>连接成功但无法上网怎么办？</h3>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>请按以下步骤排查：</p>
+                    <ol>
+                        <li><strong>检查订阅状态：</strong>确认您的订阅是否过期或流量是否用完</li>
+                        <li><strong>切换节点：</strong>尝试连接其他服务器节点</li>
+                        <li><strong>测试延迟：</strong>进行延迟测试，选择延迟较低的节点</li>
+                        <li><strong>检查系统代理：</strong>确认系统代理设置是否正确</li>
+                        <li><strong>重启应用：</strong>完全关闭并重新启动 {{ .Site.Params.app.name }}</li>
+                        <li><strong>检查防火墙：</strong>确保防火墙没有阻止应用的网络访问</li>
+                    </ol>
+                    <div class="warning-box">
+                        <p><strong>注意：</strong>如果所有节点都无法使用，请联系您的服务提供商确认服务状态。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="connection">
+                <div class="faq-question">
+                    <h3>连接速度很慢怎么办？</h3>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>优化连接速度的方法：</p>
+                    <ol>
+                        <li><strong>选择最佳节点：</strong>使用延迟测试功能，选择延迟最低的节点</li>
+                        <li><strong>更换协议：</strong>尝试不同的协议类型（如 Reality、VLESS、Hysteria）</li>
+                        <li><strong>调整 DNS：</strong>在设置中更换 DNS 服务器（推荐 1.1.1.1 或 8.8.8.8）</li>
+                        <li><strong>关闭其他应用：</strong>关闭占用网络带宽的其他应用程序</li>
+                        <li><strong>检查本地网络：</strong>确认本地网络连接稳定</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 联系支持 -->
+    <div class="support-section">
+        <div class="support-card">
+            <h3>🤝 还没找到解决方案？</h3>
+            <p>如果以上答案没有解决您的问题，您可以：</p>
+            <div class="support-options">
+                <a href="/guides/" class="support-option">
+                    <span class="option-icon">📚</span>
+                    <div>
+                        <h4>查看详细教程</h4>
+                        <p>浏览我们的完整教程库</p>
+                    </div>
+                </a>
+                <a href="{{ .Site.Params.contact.github_issues }}" class="support-option" target="_blank">
+                    <span class="option-icon">🐛</span>
+                    <div>
+                        <h4>报告问题</h4>
+                        <p>在 GitHub 上提交问题报告</p>
+                    </div>
+                </a>
+                <a href="/about/" class="support-option">
+                    <span class="option-icon">📧</span>
+                    <div>
+                        <h4>联系我们</h4>
+                        <p>通过邮件获取帮助</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en" }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}</title>
+    <meta name="description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ .Permalink }}">
+    <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}">
+    <meta property="og:description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ .Permalink }}">
+    <meta property="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}">
+    <meta property="twitter:description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Styles -->
+    {{ $style := resources.Get "css/main.css" | resources.PostCSS | resources.Minify }}
+    <link rel="stylesheet" href="{{ $style.Permalink }}">
+    
+    <!-- Custom CSS -->
+    {{ range .Site.Params.custom_css }}
+    <link rel="stylesheet" href="{{ . }}">
+    {{ end }}
+    
+    <!-- RSS -->
+    {{ with .OutputFormats.Get "rss" -}}
+    {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+    {{ end -}}
+    
+    <!-- JSON Feed -->
+    {{ if .OutputFormats.Get "JSON" }}
+    <link rel="alternate" type="application/json" title="{{ .Site.Title }}" href="{{ "/feed.json" | absURL }}" />
+    {{ end }}
+</head>
+<body>
+    {{ partial "header.html" . }}
+    
+    <main>
+        {{ block "main" . }}{{ end }}
+    </main>
+    
+    {{ partial "footer.html" . }}
+    
+    <!-- Scripts -->
+    {{ $script := resources.Get "js/main.js" | resources.Minify }}
+    <script src="{{ $script.Permalink }}"></script>
+    
+    <!-- Page-specific scripts -->
+    {{ block "scripts" . }}{{ end }}
+    
+    <!-- Custom JS -->
+    {{ range .Site.Params.custom_js }}
+    <script src="{{ . }}"></script>
+    {{ end }}
+    
+    <!-- Analytics -->
+    {{ partial "analytics.html" . }}
+</body>
+</html>

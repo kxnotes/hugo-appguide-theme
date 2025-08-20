@@ -1,0 +1,96 @@
+{{ define "main" }}
+{{ if eq .Section "guides" }}
+<!-- 教程文章布局 -->
+<div class="article-main">
+    <div class="container">
+        <!-- 面包屑导航 -->
+        <nav class="breadcrumb">
+            <a href="/">首页</a>
+            <span class="separator">›</span>
+            <a href="/{{ .Section }}/">{{ .Section | title }}</a>
+            <span class="separator">›</span>
+            <span class="current">{{ .Title }}</span>
+        </nav>
+
+        <div class="article-layout">
+            <!-- 文章内容 -->
+            <article class="article-content">
+                <!-- 文章头部 -->
+                <header class="article-header">
+                    <div class="article-meta">
+                        {{ with .Params.categories }}
+                        <span class="category-badge {{ index . 0 | lower | replaceRE "[^a-z0-9]+" "-" }}">{{ index . 0 }}</span>
+                        {{ end }}
+                        <span class="read-time">⏱️ 预计阅读时间：{{ .ReadingTime }} 分钟</span>
+                    </div>
+                    <h1>{{ .Title }}</h1>
+                    <div class="article-info">
+                        <span class="publish-date">发布日期：{{ .Date.Format "2006-01-02" }}</span>
+                        {{ with .Params.difficulty }}
+                        <span class="difficulty">难度：{{ . }}</span>
+                        {{ end }}
+                        <span class="last-updated">最后更新：{{ .Lastmod.Format "2006-01-02" }}</span>
+                    </div>
+                    {{ with .Summary }}
+                    <p class="article-intro">{{ . }}</p>
+                    {{ end }}
+                </header>
+
+                <!-- 文章正文 -->
+                <div class="article-body">
+                    {{ .Content }}
+                </div>
+
+                <!-- 文章底部 -->
+                <footer class="article-footer">
+                    {{ with .Params.tags }}
+                    <div class="article-tags">
+                        {{ range . }}
+                        <span class="tag">{{ . }}</span>
+                        {{ end }}
+                    </div>
+                    {{ end }}
+                    <div class="article-actions">
+                        <button class="action-btn" onclick="window.print()">
+                            <span>🖨️</span> 打印教程
+                        </button>
+                        <button class="action-btn" onclick="copyArticleLink()">
+                            <span>🔗</span> 复制链接
+                        </button>
+                    </div>
+                </footer>
+            </article>
+
+            <!-- 侧边栏目录 -->
+            <aside class="article-sidebar">
+                {{ partial "toc.html" . }}
+                {{ partial "related-articles.html" . }}
+            </aside>
+        </div>
+    </div>
+</div>
+{{ else }}
+<!-- 通用单页面布局 -->
+<div class="main-content">
+    <div class="container">
+        <div class="page-header">
+            <h1>{{ .Title }}</h1>
+            {{ with .Description }}
+            <p class="page-subtitle">{{ . }}</p>
+            {{ end }}
+        </div>
+        
+        <div class="page-content">
+            {{ .Content }}
+        </div>
+    </div>
+</div>
+{{ end }}
+{{ end }}
+
+{{ define "scripts" }}
+{{ if eq .Section "guides" }}
+{{ $articleScript := resources.Get "js/article.js" | resources.Minify }}
+<script src="{{ $articleScript.Permalink }}"></script>
+{{ end }}
+{{ end }}

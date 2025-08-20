@@ -1,0 +1,163 @@
+{{ define "main" }}
+<div class="pt-20 min-h-screen">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{{ .Title | default "下载" }} {{ .Site.Params.app.name }}</h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">{{ .Description | default "选择适合您设备的版本，开始安全的网络体验" }}</p>
+        </div>
+
+        <!-- 安全提示 -->
+        <div class="warning-box mb-12 flex items-start space-x-4">
+            <div class="text-3xl flex-shrink-0">⚠️</div>
+            <div>
+                <h3 class="text-warning-800 text-xl font-semibold mb-2">安全提示</h3>
+                <p class="text-warning-700">为确保您的安全，本站所有下载链接均直接指向 {{ .Site.Params.app.name }} 官方 GitHub Releases 页面。我们绝不提供任何修改版或第三方安装包。请校验文件以确保安全。</p>
+            </div>
+        </div>
+
+        <!-- 下载表格 -->
+        <div class="mb-16">
+            <div class="download-table">
+                <div class="table-header hidden md:grid">
+                    <div>操作系统</div>
+                    <div>最新版本</div>
+                    <div>更新日期</div>
+                    <div>下载链接</div>
+                    <div>校验和</div>
+                </div>
+
+                {{ range .Site.Params.downloads.platforms }}
+                <div class="table-row">
+                    <div class="col-platform">
+                        <div class="platform-info">
+                            <span class="platform-icon">{{ .icon }}</span>
+                            <div>
+                                <div class="font-semibold text-gray-900">{{ .name }}</div>
+                                <div class="text-sm text-gray-600">{{ .description }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-version">
+                        {{ if eq .status "coming_soon" }}
+                        <span class="version-badge coming-soon">即将推出</span>
+                        {{ else }}
+                        <span class="version-badge">{{ $.Site.Params.downloads.latest_version }}</span>
+                        {{ end }}
+                    </div>
+                    <div class="col-date text-gray-600">
+                        {{ if eq .status "coming_soon" }}
+                        -
+                        {{ else }}
+                        {{ $.Site.Params.downloads.release_date }}
+                        {{ end }}
+                    </div>
+                    <div class="col-download">
+                        <div class="download-buttons">
+                            {{ range .files }}
+                            {{ if eq .type "play" }}
+                            <a href="https://play.google.com/store/apps/details?id=app.hiddify.com" class="download-btn secondary" target="_blank">{{ .label }}</a>
+                            {{ else if eq .type "appstore" }}
+                            <a href="https://apps.apple.com/app/hiddify/id6596777532" class="download-btn primary" target="_blank">{{ .label }}</a>
+                            {{ else }}
+                            <a href="{{ $.Site.Params.app.github }}/releases/latest" class="download-btn primary" target="_blank">{{ .label }}</a>
+                            {{ end }}
+                            {{ end }}
+                        </div>
+                    </div>
+                    <div class="col-checksum">
+                        {{ if ne .status "coming_soon" }}
+                        <button class="btn-secondary text-sm" onclick="showChecksum('{{ .name | lower | replaceRE "[^a-z0-9]+" "-" }}')">SHA256</button>
+                        {{ else }}
+                        <span class="text-gray-400">-</span>
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+
+        <!-- 安装说明 -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">安装说明</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-900">🖥️ Windows 用户</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start">
+                                <span class="text-primary-500 mr-2">•</span>
+                                下载 .exe 文件直接安装，或下载 .zip 文件解压使用
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-primary-500 mr-2">•</span>
+                                首次运行时，Windows Defender 可能会提示，请选择"允许"
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-primary-500 mr-2">•</span>
+                                建议以管理员权限运行以获得最佳体验
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-900">🍎 macOS 用户</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start">
+                                <span class="text-primary-500 mr-2">•</span>
+                                下载对应芯片版本的 .dmg 文件
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-primary-500 mr-2">•</span>
+                                首次打开时需要在"系统偏好设置 > 安全性与隐私"中允许
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-primary-500 mr-2">•</span>
+                                Apple Silicon 版本性能更优，Intel 版本兼容性更好
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-900">📱 Android 用户</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start">
+                                <span class="text-primary-500 mr-2">•</span>
+                                推荐从 Google Play 下载，更新更及时
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-primary-500 mr-2">•</span>
+                                GitHub 版本可能需要开启"未知来源"安装权限
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-primary-500 mr-2">•</span>
+                                支持 Android 7.0 及以上版本
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 自定义内容 -->
+        {{ .Content }}
+    </div>
+</div>
+
+<!-- 校验和弹窗 -->
+<div id="checksumModal" class="modal flex items-center justify-center p-4">
+    <div class="modal-content">
+        <div class="flex justify-between items-center p-6 border-b border-gray-200">
+            <h3 class="text-xl font-semibold text-gray-900">文件校验和</h3>
+            <button class="text-gray-400 hover:text-gray-600 text-2xl font-bold" onclick="closeModal()">&times;</button>
+        </div>
+        <div id="checksumContent" class="p-6"></div>
+    </div>
+</div>
+{{ end }}
+
+{{ define "scripts" }}
+{{ $downloadScript := resources.Get "js/download.js" | resources.Minify }}
+<script src="{{ $downloadScript.Permalink }}"></script>
+{{ end }}

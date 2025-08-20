@@ -1,0 +1,96 @@
+<!-- 搜索和筛选 -->
+<div class="guides-filter">
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="搜索教程..." />
+        <span class="search-icon">🔍</span>
+    </div>
+    <div class="filter-tags">
+        <button class="filter-tag active" data-category="all">全部</button>
+        {{ $categories := .Site.Taxonomies.categories }}
+        {{ range $name, $taxonomy := $categories }}
+        <button class="filter-tag" data-category="{{ $name }}">{{ $name | title }}</button>
+        {{ end }}
+    </div>
+</div>
+
+<!-- 教程内容 -->
+<div class="guides-content">
+    {{ $categories := .Site.Taxonomies.categories }}
+    {{ range $categoryName, $taxonomy := $categories }}
+    {{ $categoryPages := where $.Pages ".Params.categories" "intersect" (slice $categoryName) }}
+    {{ if $categoryPages }}
+    <section class="guides-section" data-category="{{ $categoryName }}">
+        <h2 class="section-title">
+            <span class="section-icon">
+                {{ if eq $categoryName "入门指南" }}🚀
+                {{ else if eq $categoryName "进阶技巧" }}⚡
+                {{ else if eq $categoryName "故障排除" }}🔧
+                {{ else }}📖{{ end }}
+            </span>
+            {{ $categoryName | title }}
+        </h2>
+        <div class="guides-grid">
+            {{ range $categoryPages }}
+            <article class="guide-article" data-category="{{ $categoryName }}">
+                <div class="article-image">
+                    <div class="placeholder-image">{{ .Params.icon | default "📖" }}</div>
+                </div>
+                <div class="article-content">
+                    <div class="article-meta">
+                        <span class="category-badge {{ $categoryName | lower | replaceRE "[^a-z0-9]+" "-" }}">{{ $categoryName }}</span>
+                        <span class="read-time">⏱️ {{ .ReadingTime }} 分钟</span>
+                    </div>
+                    <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+                    <p>{{ .Summary | truncate 150 }}</p>
+                    <div class="article-footer">
+                        {{ with .Params.difficulty }}
+                        <span class="difficulty">难度: {{ . }}</span>
+                        {{ end }}
+                        <span class="update-date">更新: {{ .Date.Format "2006-01-02" }}</span>
+                    </div>
+                </div>
+            </article>
+            {{ end }}
+        </div>
+    </section>
+    {{ end }}
+    {{ end }}
+
+    <!-- 如果没有分类，显示所有页面 -->
+    {{ if not $categories }}
+    <section class="guides-section" data-category="all">
+        <div class="guides-grid">
+            {{ range .Pages }}
+            <article class="guide-article" data-category="all">
+                <div class="article-image">
+                    <div class="placeholder-image">{{ .Params.icon | default "📖" }}</div>
+                </div>
+                <div class="article-content">
+                    <div class="article-meta">
+                        <span class="category-badge">教程</span>
+                        <span class="read-time">⏱️ {{ .ReadingTime }} 分钟</span>
+                    </div>
+                    <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+                    <p>{{ .Summary | truncate 150 }}</p>
+                    <div class="article-footer">
+                        {{ with .Params.difficulty }}
+                        <span class="difficulty">难度: {{ . }}</span>
+                        {{ end }}
+                        <span class="update-date">更新: {{ .Date.Format "2006-01-02" }}</span>
+                    </div>
+                </div>
+            </article>
+            {{ end }}
+        </div>
+    </section>
+    {{ end }}
+</div>
+
+<!-- 贡献指南 -->
+<div class="contribute-section">
+    <div class="contribute-card">
+        <h3>📝 想要贡献教程？</h3>
+        <p>如果您有好的使用经验或解决方案，欢迎与我们分享！我们会将优质的教程收录到网站中。</p>
+        <a href="/about/" class="contribute-btn">了解如何贡献</a>
+    </div>
+</div>
