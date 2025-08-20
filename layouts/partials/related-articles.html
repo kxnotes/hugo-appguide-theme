@@ -1,12 +1,12 @@
 {{ $related := .Site.RegularPages.Related . | first 5 }}
 {{ if $related }}
-<div class="related-articles">
-    <h3>相关教程</h3>
-    <div class="related-list">
+<div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
+    <h3 class="bg-gray-50 px-6 py-4 m-0 text-base font-semibold text-gray-900 border-b border-gray-200">相关教程</h3>
+    <div class="p-0">
         {{ range $related }}
-        <a href="{{ .Permalink }}" class="related-item">
-            <span class="related-icon">{{ .Params.icon | default "📖" }}</span>
-            <span>{{ .Title }}</span>
+        <a href="{{ .Permalink }}" class="flex items-center gap-4 px-6 py-3 text-gray-700 no-underline transition-colors duration-300 hover:bg-gray-50">
+            <span class="text-xl flex-shrink-0">{{ .Params.icon | default "📖" }}</span>
+            <span class="text-sm">{{ .Title }}</span>
         </a>
         {{ end }}
     </div>

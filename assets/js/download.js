@@ -50,7 +50,7 @@ function showChecksum(platform) {
     `;
     
     content.innerHTML = checksumHtml;
-    modal.style.display = 'block';
+    modal.classList.remove('hidden');
 }
 
 // 复制到剪贴板
@@ -96,49 +96,155 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeBtn = document.querySelector('.close');
     
     // 关闭按钮
-    closeBtn.onclick = function() {
-        modal.style.display = 'none';
+    if (closeBtn) {
+        closeBtn.onclick = function() {
+            modal.classList.add('hidden');
+        }
     }
     
     // 点击模态框外部关闭
     window.onclick = function(event) {
         if (event.target === modal) {
-            modal.style.display = 'none';
+            modal.classList.add('hidden');
         }
     }
     
     // ESC 键关闭
     document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape' && modal.style.display === 'block') {
-            modal.style.display = 'none';
+        if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+            modal.classList.add('hidden');
         }
     });
 });
 
-// 检查最新版本（可选功能）
+// 检查最新版本并更新下载信息
 async function checkLatestVersion() {
     try {
         const response = await fetch('https://api.github.com/repos/hiddify/hiddify-next/releases/latest');
         const data = await response.json();
         
-        // 更新页面上的版本信息
-        const versionBadges = document.querySelectorAll('.version-badge:not(.coming-soon)');
-        versionBadges.forEach(badge => {
-            badge.textContent = data.tag_name;
-        });
+        // 更新版本信息
+        updateVersionInfo(data);
         
-        // 更新日期
-        const dateElements = document.querySelectorAll('.col-date');
-        const releaseDate = new Date(data.published_at).toLocaleDateString('zh-CN');
-        dateElements.forEach((element, index) => {
-            if (index < dateElements.length - 1) { // 排除 iOS 行
-                element.textContent = releaseDate;
-            }
-        });
+        // 更新下载链接
+        updateDownloadLinks(data.assets);
+        
+        // 获取并更新SHA256值（如果可用）
+        await updateSHA256Checksums(data.assets);
         
     } catch (error) {
         console.log('无法获取最新版本信息:', error);
     }
+}
+
+// 更新版本和日期信息
+function updateVersionInfo(releaseData) {
+    // 更新版本徽章（排除iOS）
+    document.querySelectorAll('span:contains("v2.0.5")').forEach(badge => {
+        if (!badge.closest('.table-row')?.textContent.includes('iOS')) {
+            badge.textContent = releaseData.tag_name;
+        }
+    });
+    
+    // 更新发布日期
+    const releaseDate = new Date(releaseData.published_at).toLocaleDateString('zh-CN');
+    const dateElements = document.querySelectorAll('.grid .grid-cols-1 .text-gray-600');
+    dateElements.forEach(element => {
+        if (element.textContent.includes('2024-12-15')) {
+            element.textContent = releaseDate;
+        }
+    });
+}
+
+// 更新下载链接
+function updateDownloadLinks(assets) {
+    const assetMap = {};
+    
+    // 分析assets创建映射
+    assets.forEach(asset => {
+        const name = asset.name.toLowerCase();
+        if (name.includes('windows') && name.endsWith('.exe')) {
+            assetMap['windows-exe'] = asset.browser_download_url;
+        } else if (name.includes('windows') && name.endsWith('.zip')) {
+            assetMap['windows-zip'] = asset.browser_download_url;
+        } else if (name.includes('macos') && name.includes('arm64') && name.endsWith('.dmg')) {
+            assetMap['macos-arm'] = asset.browser_download_url;
+        } else if (name.includes('macos') && name.includes('intel') && name.endsWith('.dmg')) {
+            assetMap['macos-intel'] = asset.browser_download_url;
+        } else if (name.includes('android') && name.endsWith('.apk')) {
+            assetMap['android'] = asset.browser_download_url;
+        } else if (name.includes('linux') && name.endsWith('.appimage')) {
+            assetMap['linux'] = asset.browser_download_url;
+        }
+    });
+    
+    // 更新页面上的下载链接
+    document.querySelectorAll('a[href*="releases/latest"]').forEach(link => {
+        const text = link.textContent.toLowerCase();
+        if (text.includes('.exe') && assetMap['windows-exe']) {
+            link.href = assetMap['windows-exe'];
+        } else if (text.includes('.zip') && assetMap['windows-zip']) {
+            link.href = assetMap['windows-zip'];
+        } else if (text.includes('.dmg')) {
+            const row = link.closest('.grid');
+            if (row?.textContent.includes('Apple Silicon') && assetMap['macos-arm']) {
+                link.href = assetMap['macos-arm'];
+            } else if (row?.textContent.includes('Intel') && assetMap['macos-intel']) {
+                link.href = assetMap['macos-intel'];
+            }
+        } else if (text.includes('.apk') && assetMap['android']) {
+            link.href = assetMap['android'];
+        } else if (text.includes('.appimage') && assetMap['linux']) {
+            link.href = assetMap['linux'];
+        }
+    });
+}
+
+// 获取SHA256校验码（从release notes或separate API）
+async function updateSHA256Checksums(assets) {
+    try {
+        // 尝试找到checksums文件
+        const checksumAsset = assets.find(asset => 
+            asset.name.toLowerCase().includes('checksum') || 
+            asset.name.toLowerCase().includes('sha256')
+        );
+        
+        if (checksumAsset) {
+            const checksumResponse = await fetch(checksumAsset.browser_download_url);
+            const checksumText = await checksumResponse.text();
+            
+            // 解析校验码文件并更新全局checksums对象
+            parseAndUpdateChecksums(checksumText);
+        }
+    } catch (error) {
+        console.log('无法获取校验码信息:', error);
+    }
+}
+
+// 解析校验码文件
+function parseAndUpdateChecksums(checksumText) {
+    const lines = checksumText.split('\n');
+    const newChecksums = {};
+    
+    lines.forEach(line => {
+        const match = line.match(/^([a-f0-9]{64})\s+(.+)$/i);
+        if (match) {
+            const [, hash, filename] = match;
+            const name = filename.toLowerCase();
+            
+            if (name.includes('windows') && name.endsWith('.exe')) {
+                if (!newChecksums.windows) newChecksums.windows = {};
+                newChecksums.windows.exe = hash;
+            } else if (name.includes('windows') && name.endsWith('.zip')) {
+                if (!newChecksums.windows) newChecksums.windows = {};
+                newChecksums.windows.zip = hash;
+            }
+            // 添加其他平台的解析...
+        }
+    });
+    
+    // 更新全局checksums对象
+    Object.assign(checksums, newChecksums);
 }
 
 // 页面加载时检查最新版本

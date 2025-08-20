@@ -1,60 +1,60 @@
 {{ define "main" }}
 {{ if eq .Section "guides" }}
 <!-- 教程文章布局 -->
-<div class="article-main">
-    <div class="container">
+<div class="pt-24 min-h-screen">
+    <div class="max-w-6xl mx-auto px-5">
         <!-- 面包屑导航 -->
-        <nav class="breadcrumb">
-            <a href="/">首页</a>
-            <span class="separator">›</span>
-            <a href="/{{ .Section }}/">{{ .Section | title }}</a>
-            <span class="separator">›</span>
-            <span class="current">{{ .Title }}</span>
+        <nav class="flex items-center space-x-2 text-sm text-gray-600 mb-8">
+            <a href="/" class="text-blue-600 hover:text-blue-700 transition-colors duration-300">首页</a>
+            <span class="text-gray-400">›</span>
+            <a href="/{{ .Section }}/" class="text-blue-600 hover:text-blue-700 transition-colors duration-300">{{ .Section | title }}</a>
+            <span class="text-gray-400">›</span>
+            <span class="text-gray-900 font-medium">{{ .Title }}</span>
         </nav>
 
-        <div class="article-layout">
+        <div class="grid lg:grid-cols-4 gap-8 items-start">
             <!-- 文章内容 -->
-            <article class="article-content">
+            <article class="lg:col-span-3 bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
                 <!-- 文章头部 -->
-                <header class="article-header">
-                    <div class="article-meta">
+                <header class="p-8 bg-gradient-to-br from-blue-500 via-purple-600 to-purple-700 text-white">
+                    <div class="flex gap-4 mb-6 flex-wrap">
                         {{ with .Params.categories }}
-                        <span class="category-badge {{ index . 0 | lower | replaceRE "[^a-z0-9]+" "-" }}">{{ index . 0 }}</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wide bg-white/20 text-white border border-white/30">{{ index . 0 }}</span>
                         {{ end }}
-                        <span class="read-time">⏱️ 预计阅读时间：{{ .ReadingTime }} 分钟</span>
+                        <span class="text-white/90 text-sm">⏱️ 预计阅读时间：{{ .ReadingTime }} 分钟</span>
                     </div>
-                    <h1>{{ .Title }}</h1>
-                    <div class="article-info">
-                        <span class="publish-date">发布日期：{{ .Date.Format "2006-01-02" }}</span>
+                    <h1 class="text-3xl md:text-4xl font-bold mb-6 leading-tight">{{ .Title }}</h1>
+                    <div class="flex gap-8 mb-6 text-sm opacity-90 flex-wrap">
+                        <span>发布日期：{{ .Date.Format "2006-01-02" }}</span>
                         {{ with .Params.difficulty }}
-                        <span class="difficulty">难度：{{ . }}</span>
+                        <span>难度：{{ . }}</span>
                         {{ end }}
-                        <span class="last-updated">最后更新：{{ .Lastmod.Format "2006-01-02" }}</span>
+                        <span>最后更新：{{ .Lastmod.Format "2006-01-02" }}</span>
                     </div>
                     {{ with .Summary }}
-                    <p class="article-intro">{{ . }}</p>
+                    <p class="text-lg leading-relaxed opacity-95">{{ . }}</p>
                     {{ end }}
                 </header>
 
                 <!-- 文章正文 -->
-                <div class="article-body">
+                <div class="p-8 prose prose-lg max-w-none">
                     {{ .Content }}
                 </div>
 
                 <!-- 文章底部 -->
-                <footer class="article-footer">
+                <footer class="px-8 py-6 bg-gray-50 border-t border-gray-200 flex flex-wrap justify-between items-center gap-4">
                     {{ with .Params.tags }}
-                    <div class="article-tags">
+                    <div class="flex gap-2 flex-wrap">
                         {{ range . }}
-                        <span class="tag">{{ . }}</span>
+                        <span class="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium">{{ . }}</span>
                         {{ end }}
                     </div>
                     {{ end }}
-                    <div class="article-actions">
-                        <button class="action-btn" onclick="window.print()">
+                    <div class="flex gap-4">
+                        <button class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg cursor-pointer text-sm transition-all duration-300 hover:bg-gray-50 hover:border-gray-400" onclick="window.print()">
                             <span>🖨️</span> 打印教程
                         </button>
-                        <button class="action-btn" onclick="copyArticleLink()">
+                        <button class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg cursor-pointer text-sm transition-all duration-300 hover:bg-gray-50 hover:border-gray-400" onclick="copyArticleLink()">
                             <span>🔗</span> 复制链接
                         </button>
                     </div>
@@ -62,7 +62,7 @@
             </article>
 
             <!-- 侧边栏目录 -->
-            <aside class="article-sidebar">
+            <aside class="lg:sticky lg:top-24 h-fit space-y-8">
                 {{ partial "toc.html" . }}
                 {{ partial "related-articles.html" . }}
             </aside>
@@ -71,16 +71,16 @@
 </div>
 {{ else }}
 <!-- 通用单页面布局 -->
-<div class="main-content">
-    <div class="container">
-        <div class="page-header">
-            <h1>{{ .Title }}</h1>
+<div class="pt-24 min-h-screen">
+    <div class="max-w-4xl mx-auto px-5">
+        <div class="text-center mb-12">
+            <h1 class="text-3xl md:text-5xl font-bold text-gray-900 mb-4">{{ .Title }}</h1>
             {{ with .Description }}
-            <p class="page-subtitle">{{ . }}</p>
+            <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">{{ . }}</p>
             {{ end }}
         </div>
         
-        <div class="page-content">
+        <div class="prose prose-lg max-w-none mx-auto">
             {{ .Content }}
         </div>
     </div>

@@ -1,13 +1,13 @@
 {{ define "main" }}
 <!-- 英雄区 -->
-<section class="hero">
-    <div class="hero-container">
-        <div class="hero-content">
-            <h1 class="hero-title">{{ .Site.Params.app.name }}</h1>
-            <p class="hero-subtitle">{{ .Site.Params.app.tagline | default .Site.Params.description }}</p>
-            <a href="/download/" class="cta-button">立即下载最新版本</a>
+<section class="hero-gradient text-white py-20 pt-28 min-h-screen flex items-center">
+    <div class="max-w-6xl mx-auto px-5 grid md:grid-cols-2 gap-16 items-center">
+        <div class="text-center md:text-left">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-4 text-gradient">{{ .Site.Params.app.name }}</h1>
+            <p class="text-lg md:text-xl mb-8 opacity-90 leading-relaxed">{{ .Site.Params.app.tagline | default .Site.Params.description }}</p>
+            <a href="/download/" class="inline-block bg-emerald-500 hover:bg-emerald-600 text-white px-10 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1">立即下载最新版本</a>
         </div>
-        <div class="hero-image">
+        <div class="flex justify-center items-center">
             <div class="w-80 h-96 bg-white/10 rounded-3xl border-2 border-white/20 backdrop-blur-lg flex items-center justify-center">
                 <div class="w-4/5 h-4/5 bg-white/5 rounded-2xl border border-white/10"></div>
             </div>
@@ -16,25 +16,27 @@
 </section>
 
 <!-- 特色介绍区 -->
-<section class="features">
-    <div class="features-grid">
-        {{ range .Site.Params.features }}
-        <div class="feature-card">
-            <div class="feature-icon">
-                {{ if eq .icon "🖥️📱🍎" }}
-                <div class="flex justify-center space-x-2">
-                    <span class="text-5xl">🖥️</span>
-                    <span class="text-5xl">📱</span>
-                    <span class="text-5xl">🍎</span>
+<section class="py-20 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="grid md:grid-cols-3 gap-8">
+            {{ range .Site.Params.features }}
+            <div class="bg-white p-8 rounded-2xl text-center shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-gray-100 card-hover">
+                <div class="text-5xl mb-6">
+                    {{ if eq .icon "🖥️📱🍎" }}
+                    <div class="flex justify-center space-x-2">
+                        <span class="text-5xl">🖥️</span>
+                        <span class="text-5xl">📱</span>
+                        <span class="text-5xl">🍎</span>
+                    </div>
+                    {{ else }}
+                    <span class="text-5xl">{{ .icon }}</span>
+                    {{ end }}
                 </div>
-                {{ else }}
-                <span class="text-5xl">{{ .icon }}</span>
-                {{ end }}
+                <h3 class="text-xl font-bold mb-4 text-gray-900">{{ .title }}</h3>
+                <p class="text-gray-600 leading-relaxed">{{ .description }}</p>
             </div>
-            <h3>{{ .title }}</h3>
-            <p>{{ .description }}</p>
+            {{ end }}
         </div>
-        {{ end }}
     </div>
 </section>
 
@@ -46,8 +48,8 @@
         <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">快速上手指南</h2>
         <div class="grid md:grid-cols-3 gap-8">
             {{ range first 3 (where $guides ".Params.featured" true) }}
-            <a href="{{ .Permalink }}" class="card hover:shadow-xl transition-all duration-300 hover:-translate-y-1 no-underline">
-                <div class="card-body text-center">
+            <a href="{{ .Permalink }}" class="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 no-underline block">
+                <div class="p-6 text-center">
                     <div class="text-5xl mb-4">{{ .Params.icon | default "📖" }}</div>
                     <h3 class="text-xl font-semibold mb-3 text-gray-900">{{ .Title }}</h3>
                     <p class="text-gray-600">{{ .Summary | truncate 100 }}</p>
@@ -55,22 +57,22 @@
             </a>
             {{ else }}
             <!-- 默认教程卡片 -->
-            <a href="/guides/windows-setup/" class="card hover:shadow-xl transition-all duration-300 hover:-translate-y-1 no-underline">
-                <div class="card-body text-center">
+            <a href="/guides/windows-setup/" class="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 no-underline block">
+                <div class="p-6 text-center">
                     <div class="text-5xl mb-4">🖥️</div>
                     <h3 class="text-xl font-semibold mb-3 text-gray-900">Windows 用户快速入门</h3>
                     <p class="text-gray-600">详细的 Windows 系统安装与配置教程</p>
                 </div>
             </a>
-            <a href="/guides/subscription-setup/" class="card hover:shadow-xl transition-all duration-300 hover:-translate-y-1 no-underline">
-                <div class="card-body text-center">
+            <a href="/guides/subscription-setup/" class="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 no-underline block">
+                <div class="p-6 text-center">
                     <div class="text-5xl mb-4">📋</div>
                     <h3 class="text-xl font-semibold mb-3 text-gray-900">如何导入订阅链接？</h3>
                     <p class="text-gray-600">一步步教您导入和管理订阅配置</p>
                 </div>
             </a>
-            <a href="/guides/android-setup/" class="card hover:shadow-xl transition-all duration-300 hover:-translate-y-1 no-underline">
-                <div class="card-body text-center">
+            <a href="/guides/android-setup/" class="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 no-underline block">
+                <div class="p-6 text-center">
                     <div class="text-5xl mb-4">📱</div>
                     <h3 class="text-xl font-semibold mb-3 text-gray-900">Android 客户端设置指南</h3>
                     <p class="text-gray-600">Android 设备的完整配置流程</p>
@@ -90,16 +92,16 @@
         <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">最新更新</h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {{ range $recentPosts }}
-            <article class="card hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <div class="card-body">
+            <article class="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+                <div class="p-6">
                     <div class="flex justify-between items-center mb-4 text-sm">
                         <time class="text-gray-500">{{ .Date.Format "2006-01-02" }}</time>
                         {{ with .Params.categories }}
-                        <span class="tag tag-primary">{{ index . 0 }}</span>
+                        <span class="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">{{ index . 0 }}</span>
                         {{ end }}
                     </div>
                     <h3 class="text-xl font-semibold mb-3">
-                        <a href="{{ .Permalink }}" class="text-gray-900 hover:text-primary-600 no-underline transition-colors duration-300">{{ .Title }}</a>
+                        <a href="{{ .Permalink }}" class="text-gray-900 hover:text-blue-600 no-underline transition-colors duration-300">{{ .Title }}</a>
                     </h3>
                     <p class="text-gray-600 mb-4 leading-relaxed">{{ .Summary | truncate 120 }}</p>
                     <div class="flex justify-between items-center pt-4 border-t border-gray-100 text-sm text-gray-500">
