@@ -175,7 +175,22 @@ menu:
 taxonomies:
   category: categories
   tag: tags
+
+# Sitemap配置
+本主题包含自定义的sitemap模板，会自动排除以下页面类型：
+- 所有tag页面 (/tags/*)
+- 所有taxonomy和term页面  
+- 设置了 `private: true` 的页面
+
+用户可以在config.yaml中配置sitemap参数：
+
+sitemap:
+  changefreq: monthly
+  priority: 0.5
+  filename: sitemap.xml
 ```
+
+
 
 ### 第三步：创建内容
 

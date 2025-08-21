@@ -114,7 +114,26 @@
   }
 
   .faq-item.active .toggle-icon {
-    @apply text-white bg-white/20 transform rotate-45;
+    @apply text-white bg-white/20 transform rotate-180;
+  }
+
+  /* 修复加号和减号的对齐问题 */
+  .toggle-icon {
+    @apply leading-none;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Courier New', 'Monaco', monospace;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  /* 确保加号和减号使用相同的Unicode字符 */
+  .toggle-icon::before {
+    content: attr(data-icon);
+    position: relative;
+    top: -1px; /* 微调垂直位置 */
   }
 
   .faq-item.active .faq-answer {

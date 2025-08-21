@@ -75,6 +75,23 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="bg-white border border-gray-200 rounded-lg mb-4 overflow-hidden transition-all duration-300 hover:shadow-md faq-item" data-category="installation">
+                    <div class="p-6 cursor-pointer flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition-colors duration-300 faq-question">
+                        <h3 class="m-0 font-semibold flex-1 pr-4">Android 安装时提示"未知来源"怎么办？</h3>
+                        <span class="text-2xl font-bold text-gray-500 w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 transition-all duration-300 toggle-icon">+</span>
+                    </div>
+                    <div class="max-h-0 overflow-hidden transition-all duration-300 bg-white faq-answer">
+                        <div class="p-6">
+                            <p class="text-gray-700 leading-relaxed mb-4">需要允许从未知来源安装应用：</p>
+                            <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                                <li>进入"设置" > "安全" > "未知来源"，开启该选项</li>
+                                <li>或者在安装时，系统会提示允许该来源，点击"允许"</li>
+                                <li><strong>推荐：</strong>直接从 Google Play 商店下载，避免此问题</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- 连接问题 -->
@@ -106,12 +123,232 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="bg-white border border-gray-200 rounded-lg mb-4 overflow-hidden transition-all duration-300 hover:shadow-md faq-item" data-category="connection">
+                    <div class="p-6 cursor-pointer flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition-colors duration-300 faq-question">
+                        <h3 class="m-0 font-semibold flex-1 pr-4">连接速度很慢怎么办？</h3>
+                        <span class="text-2xl font-bold text-gray-500 w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 transition-all duration-300 toggle-icon">+</span>
+                    </div>
+                    <div class="max-h-0 overflow-hidden transition-all duration-300 bg-white faq-answer">
+                        <div class="p-6">
+                            <p class="text-gray-700 leading-relaxed mb-4">优化连接速度的方法：</p>
+                            <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                                <li><strong>选择最佳节点：</strong>使用延迟测试功能，选择延迟最低的节点</li>
+                                <li><strong>更换协议：</strong>尝试不同的协议类型（如 Reality、VLESS、Hysteria）</li>
+                                <li><strong>调整 DNS：</strong>在设置中更换 DNS 服务器（推荐 1.1.1.1 或 8.8.8.8）</li>
+                                <li><strong>关闭其他应用：</strong>关闭占用网络带宽的其他应用程序</li>
+                                <li><strong>检查本地网络：</strong>确认本地网络连接稳定</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-lg mb-4 overflow-hidden transition-all duration-300 hover:shadow-md faq-item" data-category="connection">
+                    <div class="p-6 cursor-pointer flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition-colors duration-300 faq-question">
+                        <h3 class="m-0 font-semibold flex-1 pr-4">频繁断线重连怎么办？</h3>
+                        <span class="text-2xl font-bold text-gray-500 w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 transition-all duration-300 toggle-icon">+</span>
+                    </div>
+                    <div class="max-h-0 overflow-hidden transition-all duration-300 bg-white faq-answer">
+                        <div class="p-6">
+                            <p class="text-gray-700 leading-relaxed mb-4">解决断线问题的方法：</p>
+                            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                                <li><strong>更换节点：</strong>当前节点可能不稳定，尝试其他节点</li>
+                                <li><strong>检查网络环境：</strong>确认本地网络连接稳定</li>
+                                <li><strong>调整重连设置：</strong>在应用设置中启用自动重连功能</li>
+                                <li><strong>更新应用：</strong>确保使用最新版本的 {{ .Site.Params.app.name }}</li>
+                                <li><strong>联系服务商：</strong>如果问题持续，联系您的服务提供商</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 配置问题 -->
+            <div class="mb-16 faq-section" data-category="configuration">
+                <h2 class="flex items-center gap-4 text-2xl md:text-3xl font-bold text-gray-900 mb-8 pb-4 border-b-2 border-gray-200">
+                    <span class="text-4xl">⚙️</span>
+                    配置问题
+                </h2>
+
+                <div class="bg-white border border-gray-200 rounded-lg mb-4 overflow-hidden transition-all duration-300 hover:shadow-md faq-item" data-category="configuration">
+                    <div class="p-6 cursor-pointer flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition-colors duration-300 faq-question">
+                        <h3 class="m-0 font-semibold flex-1 pr-4">如何导入订阅链接？</h3>
+                        <span class="text-2xl font-bold text-gray-500 w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 transition-all duration-300 toggle-icon">+</span>
+                    </div>
+                    <div class="max-h-0 overflow-hidden transition-all duration-300 bg-white faq-answer">
+                        <div class="p-6">
+                            <p class="text-gray-700 leading-relaxed mb-4">导入订阅链接的详细步骤：</p>
+                            <ol class="list-decimal list-inside space-y-2 text-gray-700 mb-4">
+                                <li>复制服务提供商给您的订阅链接</li>
+                                <li>打开 {{ .Site.Params.app.name }}，点击主界面的"+"按钮</li>
+                                <li>选择"从剪贴板导入"或"从 URL 导入"</li>
+                                <li>粘贴订阅链接，点击"添加"</li>
+                                <li>等待配置文件下载完成</li>
+                            </ol>
+                            <p class="font-semibold text-gray-900 mb-2">支持的订阅格式：</p>
+                            <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                <li>标准 V2Ray 订阅</li>
+                                <li>Clash 订阅</li>
+                                <li>单节点链接（vmess、vless、trojan 等）</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-lg mb-4 overflow-hidden transition-all duration-300 hover:shadow-md faq-item" data-category="configuration">
+                    <div class="p-6 cursor-pointer flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition-colors duration-300 faq-question">
+                        <h3 class="m-0 font-semibold flex-1 pr-4">如何设置分流规则？</h3>
+                        <span class="text-2xl font-bold text-gray-500 w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 transition-all duration-300 toggle-icon">+</span>
+                    </div>
+                    <div class="max-h-0 overflow-hidden transition-all duration-300 bg-white faq-answer">
+                        <div class="p-6">
+                            <p class="text-gray-700 leading-relaxed mb-4">设置分流规则可以让不同的应用使用不同的代理策略：</p>
+                            <ol class="list-decimal list-inside space-y-2 text-gray-700 mb-4">
+                                <li>进入 {{ .Site.Params.app.name }} 的设置页面</li>
+                                <li>找到"路由规则"或"分流设置"</li>
+                                <li>选择预设规则或自定义规则</li>
+                                <li>常用规则包括：
+                                    <ul class="list-disc list-inside space-y-1 text-gray-600 mt-2 ml-4">
+                                        <li>国内直连：中国大陆网站直接访问</li>
+                                        <li>国外代理：海外网站通过代理访问</li>
+                                        <li>广告拦截：屏蔽广告域名</li>
+                                    </ul>
+                                </li>
+                            </ol>
+                            <p class="text-gray-700">详细教程请参考：<a href="/guides/routing-rules/" class="text-blue-600 hover:text-blue-800 underline">应用分流规则设置指南</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-lg mb-4 overflow-hidden transition-all duration-300 hover:shadow-md faq-item" data-category="configuration">
+                    <div class="p-6 cursor-pointer flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition-colors duration-300 faq-question">
+                        <h3 class="m-0 font-semibold flex-1 pr-4">如何设置开机自启动？</h3>
+                        <span class="text-2xl font-bold text-gray-500 w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 transition-all duration-300 toggle-icon">+</span>
+                    </div>
+                    <div class="max-h-0 overflow-hidden transition-all duration-300 bg-white faq-answer">
+                        <div class="p-6">
+                            <p class="text-gray-700 leading-relaxed mb-4">设置开机自启动的方法：</p>
+                            <p class="font-semibold text-gray-900 mb-2">Windows：</p>
+                            <ol class="list-decimal list-inside space-y-1 text-gray-700 mb-4">
+                                <li>打开 {{ .Site.Params.app.name }} 设置</li>
+                                <li>找到"常规设置"或"系统设置"</li>
+                                <li>启用"开机自启动"选项</li>
+                            </ol>
+                            <p class="font-semibold text-gray-900 mb-2">macOS：</p>
+                            <ol class="list-decimal list-inside space-y-1 text-gray-700">
+                                <li>进入"系统偏好设置" > "用户与群组" > "登录项"</li>
+                                <li>点击"+"添加 {{ .Site.Params.app.name }}</li>
+                                <li>或在应用设置中启用自启动选项</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 性能问题 -->
+            <div class="mb-16 faq-section" data-category="performance">
+                <h2 class="flex items-center gap-4 text-2xl md:text-3xl font-bold text-gray-900 mb-8 pb-4 border-b-2 border-gray-200">
+                    <span class="text-4xl">⚡</span>
+                    性能问题
+                </h2>
+
+                <div class="bg-white border border-gray-200 rounded-lg mb-4 overflow-hidden transition-all duration-300 hover:shadow-md faq-item" data-category="performance">
+                    <div class="p-6 cursor-pointer flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition-colors duration-300 faq-question">
+                        <h3 class="m-0 font-semibold flex-1 pr-4">应用占用内存过高怎么办？</h3>
+                        <span class="text-2xl font-bold text-gray-500 w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 transition-all duration-300 toggle-icon">+</span>
+                    </div>
+                    <div class="max-h-0 overflow-hidden transition-all duration-300 bg-white faq-answer">
+                        <div class="p-6">
+                            <p class="text-gray-700 leading-relaxed mb-4">优化内存使用的方法：</p>
+                            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                                <li><strong>重启应用：</strong>定期重启 {{ .Site.Params.app.name }} 释放内存</li>
+                                <li><strong>减少订阅数量：</strong>删除不必要的订阅配置</li>
+                                <li><strong>关闭日志：</strong>在设置中关闭详细日志记录</li>
+                                <li><strong>更新版本：</strong>使用最新版本，通常有性能优化</li>
+                                <li><strong>检查系统资源：</strong>确保系统有足够的可用内存</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-lg mb-4 overflow-hidden transition-all duration-300 hover:shadow-md faq-item" data-category="performance">
+                    <div class="p-6 cursor-pointer flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition-colors duration-300 faq-question">
+                        <h3 class="m-0 font-semibold flex-1 pr-4">CPU 使用率过高怎么办？</h3>
+                        <span class="text-2xl font-bold text-gray-500 w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 transition-all duration-300 toggle-icon">+</span>
+                    </div>
+                    <div class="max-h-0 overflow-hidden transition-all duration-300 bg-white faq-answer">
+                        <div class="p-6">
+                            <p class="text-gray-700 leading-relaxed mb-4">降低 CPU 使用率的方法：</p>
+                            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                                <li><strong>更换协议：</strong>某些协议（如 VMess）CPU 占用较高，可尝试 VLESS 或 Trojan</li>
+                                <li><strong>减少并发连接：</strong>在设置中降低最大并发连接数</li>
+                                <li><strong>关闭不必要功能：</strong>如实时速度监控、详细日志等</li>
+                                <li><strong>检查后台应用：</strong>确保没有其他应用占用过多 CPU</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 故障排除 -->
+            <div class="mb-16 faq-section" data-category="troubleshooting">
+                <h2 class="flex items-center gap-4 text-2xl md:text-3xl font-bold text-gray-900 mb-8 pb-4 border-b-2 border-gray-200">
+                    <span class="text-4xl">🔧</span>
+                    故障排除
+                </h2>
+
+                <div class="bg-white border border-gray-200 rounded-lg mb-4 overflow-hidden transition-all duration-300 hover:shadow-md faq-item" data-category="troubleshooting">
+                    <div class="p-6 cursor-pointer flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition-colors duration-300 faq-question">
+                        <h3 class="m-0 font-semibold flex-1 pr-4">应用无法启动怎么办？</h3>
+                        <span class="text-2xl font-bold text-gray-500 w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 transition-all duration-300 toggle-icon">+</span>
+                    </div>
+                    <div class="max-h-0 overflow-hidden transition-all duration-300 bg-white faq-answer">
+                        <div class="p-6">
+                            <p class="text-gray-700 leading-relaxed mb-4">解决启动问题的步骤：</p>
+                            <ol class="list-decimal list-inside space-y-2 text-gray-700">
+                                <li><strong>检查系统兼容性：</strong>确认操作系统版本符合要求</li>
+                                <li><strong>以管理员权限运行：</strong>右键选择"以管理员身份运行"</li>
+                                <li><strong>检查防火墙：</strong>确保防火墙没有阻止应用</li>
+                                <li><strong>重新安装：</strong>卸载后重新下载安装最新版本</li>
+                                <li><strong>检查依赖：</strong>确保系统安装了必要的运行库</li>
+                                <li><strong>查看日志：</strong>检查应用日志文件获取错误信息</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-gray-200 rounded-lg mb-4 overflow-hidden transition-all duration-300 hover:shadow-md faq-item" data-category="troubleshooting">
+                    <div class="p-6 cursor-pointer flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition-colors duration-300 faq-question">
+                        <h3 class="m-0 font-semibold flex-1 pr-4">如何重置应用设置？</h3>
+                        <span class="text-2xl font-bold text-gray-500 w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 transition-all duration-300 toggle-icon">+</span>
+                    </div>
+                    <div class="max-h-0 overflow-hidden transition-all duration-300 bg-white faq-answer">
+                        <div class="p-6">
+                            <p class="text-gray-700 leading-relaxed mb-4">重置应用设置的方法：</p>
+                            <p class="font-semibold text-gray-900 mb-2">方法一：应用内重置</p>
+                            <ol class="list-decimal list-inside space-y-1 text-gray-700 mb-4">
+                                <li>打开 {{ .Site.Params.app.name }} 设置</li>
+                                <li>找到"高级设置"或"系统设置"</li>
+                                <li>点击"重置设置"或"恢复默认"</li>
+                            </ol>
+                            <p class="font-semibold text-gray-900 mb-2">方法二：手动删除配置文件</p>
+                            <ul class="list-disc list-inside space-y-1 text-gray-700 mb-4">
+                                <li><strong>Windows：</strong><code class="bg-gray-100 text-gray-900 px-2 py-1 rounded text-sm font-mono">%APPDATA%\HiddifyNext\</code></li>
+                                <li><strong>macOS：</strong><code class="bg-gray-100 text-gray-900 px-2 py-1 rounded text-sm font-mono">~/Library/Application Support/HiddifyNext/</code></li>
+                                <li><strong>Linux：</strong><code class="bg-gray-100 text-gray-900 px-2 py-1 rounded text-sm font-mono">~/.config/HiddifyNext/</code></li>
+                            </ul>
+                            <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
+                                <p class="text-red-700 m-0"><strong>注意：</strong>重置设置会删除所有配置，包括订阅信息，请提前备份重要数据。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- 联系支持 -->
         <div class="mt-16">
-            <div class="bg-gradient-to-br from-blue-500 via-purple-600 to-purple-700 text-white p-12 rounded-3xl text-center shadow-2xl">
+            <div class="hero-gradient text-white p-12 rounded-3xl text-center shadow-2xl">
                 <h3 class="text-2xl md:text-3xl font-bold mb-4">🤝 还没找到解决方案？</h3>
                 <p class="text-lg md:text-xl mb-8 opacity-90 leading-relaxed">如果以上答案没有解决您的问题，您可以：</p>
                 <div class="grid md:grid-cols-3 gap-6 mt-8">
