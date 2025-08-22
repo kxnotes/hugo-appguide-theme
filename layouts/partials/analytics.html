@@ -1,11 +1,51 @@
 {{ with .Site.Params.google_analytics }}
-<!-- Google Analytics -->
+<!-- Google Analytics 4 (GA4) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', '{{ . }}');
+  
+  gtag('config', '{{ . }}', {
+    // 增强的电子商务跟踪
+    enhanced_conversions: true,
+    // 自动收集增强测量事件
+    allow_enhanced_conversions: true,
+    // 页面浏览量跟踪
+    page_title: document.title,
+    page_location: window.location.href,
+    // 自定义参数
+    custom_map: {
+      'dimension1': 'page_type'
+    }
+  });
+  
+  // 自定义事件：下载跟踪
+  document.addEventListener('click', function(e) {
+    var target = e.target.closest('a');
+    if (target && (target.href.includes('.exe') || target.href.includes('.apk') || 
+        target.href.includes('.dmg') || target.href.includes('.pkg') || 
+        target.href.includes('.AppImage') || target.href.includes('.ipa'))) {
+      gtag('event', 'file_download', {
+        event_category: 'engagement',
+        event_label: target.href,
+        file_name: target.href.split('/').pop(),
+        file_extension: target.href.split('.').pop()
+      });
+    }
+  });
+  
+  // 外部链接跟踪
+  document.addEventListener('click', function(e) {
+    var target = e.target.closest('a');
+    if (target && target.hostname !== window.location.hostname) {
+      gtag('event', 'click', {
+        event_category: 'outbound',
+        event_label: target.href,
+        transport_type: 'beacon'
+      });
+    }
+  });
 </script>
 {{ end }}
 

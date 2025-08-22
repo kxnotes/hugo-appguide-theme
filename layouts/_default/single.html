@@ -1,3 +1,9 @@
+{{ define "structured_data" }}
+{{ if eq .Section "guides" }}
+{{ partial "article-structured-data.html" . }}
+{{ end }}
+{{ end }}
+
 {{ define "main" }}
 {{ if eq .Section "guides" }}
 <!-- 教程文章布局 -->
@@ -16,7 +22,7 @@
             <!-- 文章内容 -->
             <article class="lg:col-span-3 bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
                 <!-- 文章头部 -->
-                <header class="p-8 bg-gradient-to-br from-blue-500 via-purple-600 to-purple-700 text-white">
+                <header class="p-8 hero-gradient text-white">
                     <div class="flex gap-4 mb-6 flex-wrap">
                         {{ with .Params.categories }}
                         <span class="px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wide bg-white/20 text-white border border-white/30">{{ index . 0 }}</span>
@@ -31,9 +37,6 @@
                         {{ end }}
                         <span>最后更新：{{ .Lastmod.Format "2006-01-02" }}</span>
                     </div>
-                    {{ with .Summary }}
-                    <p class="text-lg leading-relaxed opacity-95">{{ . }}</p>
-                    {{ end }}
                 </header>
 
                 <!-- 文章正文 -->
@@ -90,7 +93,12 @@
 
 {{ define "scripts" }}
 {{ if eq .Section "guides" }}
-{{ $articleScript := resources.Get "js/article.js" | resources.Minify }}
-<script src="{{ $articleScript.Permalink }}"></script>
+{{ $articleScript := resources.Get "js/article.js" }}
+{{ if $articleScript }}
+  {{ $minifiedScript := $articleScript | resources.Minify }}
+  <script src="{{ $minifiedScript.Permalink }}"></script>
+{{ else }}
+  <script src="{{ "js/article.js" | relURL }}"></script>
+{{ end }}
 {{ end }}
 {{ end }}

@@ -1,3 +1,9 @@
+{{ define "structured_data" }}
+{{ if eq .Section "guides" }}
+{{ partial "guides-structured-data.html" . }}
+{{ end }}
+{{ end }}
+
 {{ define "main" }}
 <div class="pt-24 min-h-screen">
     <div class="max-w-6xl mx-auto px-5">
@@ -29,10 +35,20 @@
 
 {{ define "scripts" }}
 {{ if eq .Section "guides" }}
-{{ $guidesScript := resources.Get "js/guides.js" | resources.Minify }}
-<script src="{{ $guidesScript.Permalink }}"></script>
+{{ $guidesScript := resources.Get "js/guides.js" }}
+{{ if $guidesScript }}
+  {{ $minifiedScript := $guidesScript | resources.Minify }}
+  <script src="{{ $minifiedScript.Permalink }}"></script>
+{{ else }}
+  <script src="{{ "js/guides.js" | relURL }}"></script>
+{{ end }}
 {{ else if eq .Section "faq" }}
-{{ $faqScript := resources.Get "js/faq.js" | resources.Minify }}
-<script src="{{ $faqScript.Permalink }}"></script>
+{{ $faqScript := resources.Get "js/faq.js" }}
+{{ if $faqScript }}
+  {{ $minifiedScript := $faqScript | resources.Minify }}
+  <script src="{{ $minifiedScript.Permalink }}"></script>
+{{ else }}
+  <script src="{{ "js/faq.js" | relURL }}"></script>
+{{ end }}
 {{ end }}
 {{ end }}

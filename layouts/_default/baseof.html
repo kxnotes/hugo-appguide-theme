@@ -6,20 +6,33 @@
     <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}</title>
     <meta name="description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
     
+    <!-- Google Search Console Verification -->
+    {{ with .Site.Params.google_site_verification }}
+    <meta name="google-site-verification" content="{{ . }}" />
+    {{ end }}
+    
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ .Permalink }}">
     <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}">
     <meta property="og:description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+    {{ if .IsHome }}
+    <meta property="og:image" content="{{ "hiddify-next-mobile.webp" | absURL }}">
+    {{ end }}
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ .Permalink }}">
     <meta property="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}">
     <meta property="twitter:description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+    {{ if .IsHome }}
+    <meta property="twitter:image" content="{{ "hiddify-next-mobile.webp" | absURL }}">
+    {{ end }}
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
     
     <!-- Styles -->
     {{ $style := resources.Get "css/main.css" }}
@@ -45,6 +58,10 @@
     {{ if .OutputFormats.Get "JSON" }}
     <link rel="alternate" type="application/json" title="{{ .Site.Title }}" href="{{ "/feed.json" | absURL }}" />
     {{ end }}
+    
+    <!-- Structured Data -->
+    {{ partial "structured-data.html" . }}
+    {{ block "structured_data" . }}{{ end }}
 </head>
 <body class="font-sans text-gray-900 bg-white">
     <!-- 导航栏 -->
@@ -96,8 +113,13 @@
     </footer>
     
     <!-- Scripts -->
-    {{ $script := resources.Get "js/main.js" | resources.Minify }}
-    <script src="{{ $script.Permalink }}"></script>
+    {{ $script := resources.Get "js/main.js" }}
+    {{ if $script }}
+      {{ $minifiedScript := $script | resources.Minify }}
+      <script src="{{ $minifiedScript.Permalink }}"></script>
+    {{ else }}
+      <script src="{{ "js/main.js" | relURL }}"></script>
+    {{ end }}
     
     <!-- Page-specific scripts -->
     {{ block "scripts" . }}{{ end }}

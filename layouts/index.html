@@ -1,3 +1,5 @@
+
+
 {{ define "main" }}
 <!-- 英雄区 -->
 <section class="hero-gradient text-white py-20 pt-28 min-h-screen flex items-center">
@@ -8,8 +10,11 @@
             <a href="/download/" class="inline-block bg-emerald-500 hover:bg-emerald-600 text-white px-10 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1">立即下载最新版本</a>
         </div>
         <div class="flex justify-center items-center">
-            <div class="w-80 h-96 bg-white/10 rounded-3xl border-2 border-white/20 backdrop-blur-lg flex items-center justify-center">
-                <div class="w-4/5 h-4/5 bg-white/5 rounded-2xl border border-white/10"></div>
+            <div class="relative w-80 h-96 rounded-3xl overflow-hidden shadow-2xl transform hover:scale-105 transition-all duration-300">
+                <img src="/hiddify-next-mobile.webp" 
+                     alt="Hiddify Next 移动应用界面" 
+                     class="w-full h-full object-cover object-center">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
             </div>
         </div>
     </div>

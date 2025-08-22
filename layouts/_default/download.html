@@ -1,3 +1,7 @@
+{{ define "structured_data" }}
+{{ partial "download-structured-data.html" . }}
+{{ end }}
+
 {{ define "main" }}
 <div class="pt-24 min-h-screen">
     <div class="max-w-6xl mx-auto px-5">
@@ -64,6 +68,8 @@
                             <a href="https://play.google.com/store/apps/details?id=app.hiddify.com" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 bg-gray-200 text-gray-700 hover:bg-gray-300" target="_blank">{{ .label }}</a>
                             {{ else if eq .type "appstore" }}
                             <a href="https://apps.apple.com/app/hiddify/id6596777532" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg" target="_blank">{{ .label }}</a>
+                            {{ else if eq .type "ipa" }}
+                            <a href="{{ $.Site.Params.app.github }}/releases/latest" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 bg-gray-200 text-gray-700 hover:bg-gray-300" target="_blank">{{ .label }}</a>
                             {{ else }}
                             <a href="{{ $.Site.Params.app.github }}/releases/latest" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg" target="_blank">{{ .label }}</a>
                             {{ end }}
@@ -73,7 +79,7 @@
                     <div class="flex justify-between items-center py-2 md:border-b-0">
                         <span class="font-semibold text-gray-700 md:hidden">校验:</span>
                         {{ if ne .status "coming_soon" }}
-                        <button class="bg-gray-100 border border-gray-300 text-gray-600 px-4 py-2 rounded-lg cursor-pointer text-sm transition-all duration-300 hover:bg-gray-200 hover:border-gray-400" onclick="showChecksum('{{ .name | lower | replaceRE "[^a-z0-9]+" "-" }}')">SHA256</button>
+                        <button class="bg-gray-100 border border-gray-300 text-gray-600 px-4 py-2 rounded-lg cursor-pointer text-sm transition-all duration-300 hover:bg-gray-200 hover:border-gray-400" onclick="showChecksum('{{ .name | lower | replaceRE `[^a-z0-9]+` `-` | replaceRE `apple-silicon|intel` `universal` }}')">SHA256</button>
                         {{ else }}
                         <span class="text-gray-400">-</span>
                         {{ end }}
@@ -86,7 +92,7 @@
         <!-- 安装说明 -->
         <div class="mb-16">
             <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">安装说明</h2>
-            <div class="grid md:grid-cols-3 gap-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
                     <div class="p-6">
                         <h3 class="text-xl font-semibold mb-4 text-gray-900">🖥️ Windows 用户</h3>
@@ -112,7 +118,15 @@
                         <ul class="space-y-2 text-gray-600">
                             <li class="flex items-start">
                                 <span class="text-blue-600 mr-2">•</span>
-                                下载对应芯片版本的 .dmg 文件
+                                下载对应芯片版本的 .dmg 或 .pkg 文件
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                .dmg 文件：双击安装，拖拽到应用程序文件夹
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                .pkg 文件：双击运行安装程序，按照向导完成安装
                             </li>
                             <li class="flex items-start">
                                 <span class="text-blue-600 mr-2">•</span>
@@ -120,7 +134,7 @@
                             </li>
                             <li class="flex items-start">
                                 <span class="text-blue-600 mr-2">•</span>
-                                Apple Silicon 版本性能更优，Intel 版本兼容性更好
+                                Universal 版本兼容所有 Mac 设备（Intel 和 Apple Silicon）
                             </li>
                         </ul>
                     </div>
@@ -140,6 +154,29 @@
                             <li class="flex items-start">
                                 <span class="text-blue-600 mr-2">•</span>
                                 支持 Android 7.0 及以上版本
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-900">📱 iOS 用户</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                推荐从 App Store 下载，安全且自动更新
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                .ipa 包适用于侧载安装，需要使用 AltStore、Sideloadly 等工具
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                侧载安装需要一定技术基础，免费 Apple ID 每 7 天需重新安装
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                支持 iOS 15.0 及以上版本
                             </li>
                         </ul>
                     </div>
@@ -195,6 +232,11 @@
 {{ end }}
 
 {{ define "scripts" }}
-{{ $downloadScript := resources.Get "js/download.js" | resources.Minify }}
-<script src="{{ $downloadScript.Permalink }}"></script>
+{{ $downloadScript := resources.Get "js/download.js" }}
+{{ if $downloadScript }}
+  {{ $minifiedScript := $downloadScript | resources.Minify }}
+  <script src="{{ $minifiedScript.Permalink }}"></script>
+{{ else }}
+  <script src="{{ "js/download.js" | relURL }}"></script>
+{{ end }}
 {{ end }}

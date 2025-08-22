@@ -1,3 +1,7 @@
+{{ define "structured_data" }}
+{{ partial "faq-structured-data.html" . }}
+{{ end }}
+
 {{ define "main" }}
 <div class="pt-24 min-h-screen">
     <div class="max-w-6xl mx-auto px-5">
@@ -202,18 +206,12 @@
                     </div>
                     <div class="max-h-0 overflow-hidden transition-all duration-300 bg-white faq-answer">
                         <div class="p-6">
-                            <p class="text-gray-700 leading-relaxed mb-4">设置分流规则可以让不同的应用使用不同的代理策略：</p>
+                            <p class="text-gray-700 leading-relaxed mb-4">{{ .Site.Params.app.name }} 目前不支持自定义分流规则设置。 如果您需要高级的分流规则功能，请参考本文推荐的替代客户端。</p>
                             <ol class="list-decimal list-inside space-y-2 text-gray-700 mb-4">
-                                <li>进入 {{ .Site.Params.app.name }} 的设置页面</li>
-                                <li>找到"路由规则"或"分流设置"</li>
-                                <li>选择预设规则或自定义规则</li>
-                                <li>常用规则包括：
-                                    <ul class="list-disc list-inside space-y-1 text-gray-600 mt-2 ml-4">
-                                        <li>国内直连：中国大陆网站直接访问</li>
-                                        <li>国外代理：海外网站通过代理访问</li>
-                                        <li>广告拦截：屏蔽广告域名</li>
-                                    </ul>
-                                </li>
+                                <li>Clash Verge Rev (推荐，Windows/macOS/Linux)</li>
+                                <li>ClashX Pro (macOS)</li>
+                                <li>sing-box</li>
+                                <li>Clash for Android</li>
                             </ol>
                             <p class="text-gray-700">详细教程请参考：<a href="/guides/routing-rules/" class="text-blue-600 hover:text-blue-800 underline">应用分流规则设置指南</a></p>
                         </div>
@@ -386,6 +384,12 @@
 {{ end }}
 
 {{ define "scripts" }}
-{{ $faqScript := resources.Get "js/faq.js" | resources.Minify }}
-<script src="{{ $faqScript.Permalink }}"></script>
+{{ $faqScript := resources.Get "js/faq.js" }}
+{{ if $faqScript }}
+  {{ $minifiedScript := $faqScript | resources.Minify }}
+  <script src="{{ $minifiedScript.Permalink }}"></script>
+{{ else }}
+  <!-- Fallback if resource not found -->
+  <script src="{{ "js/faq.js" | relURL }}"></script>
+{{ end }}
 {{ end }}
