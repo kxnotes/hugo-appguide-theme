@@ -10,16 +10,10 @@ params:
   
   # 应用信息
   app:
-    name: "Your App Name"
-    tagline: "Your app tagline"
-    github: "https://github.com/kxnotes/hugo-appguide-theme"
-    official_site: "https://hiddify.com"
-    play_store_url: "https://play.google.com/store/apps/details?id=xxxxx"
-    app_store_url: "https://apps.apple.com/app/hiddify-next/idxxxxxx"
-    logo: "placeholder-app.svg"
-    image: "placeholder-app.svg"
-    screenshot: "placeholder-app.svg"
-    favicon: "/favicon.ico"
+    name: 'My App'
+    tagline: '安全、快速、开源的应用程序'
+    github: 'https://github.com/myorg/myapp'
+    official_site: 'https://myapp.com'
     
   # 网站特性
   features:

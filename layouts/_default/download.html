@@ -1,4 +1,6 @@
-
+{{ define "structured_data" }}
+{{ partial "download-structured-data.html" . }}
+{{ end }}
 
 {{ define "main" }}
 <div class="pt-24 min-h-screen">
@@ -63,9 +65,9 @@
                         <div class="flex flex-wrap gap-2">
                             {{ range .files }}
                             {{ if eq .type "play" }}
-                            <a href="{{ $.Site.Params.app.play_store_url | default "https://play.google.com/store/apps" }}" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 bg-gray-200 text-gray-700 hover:bg-gray-300" target="_blank">{{ .label }}</a>
+                            <a href="https://play.google.com/store/apps/details?id=app.hiddify.com" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 bg-gray-200 text-gray-700 hover:bg-gray-300" target="_blank">{{ .label }}</a>
                             {{ else if eq .type "appstore" }}
-                            <a href="{{ $.Site.Params.app.app_store_url | default "https://apps.apple.com" }}" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg" target="_blank">{{ .label }}</a>
+                            <a href="https://apps.apple.com/app/hiddify/id6596777532" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg" target="_blank">{{ .label }}</a>
                             {{ else if eq .type "ipa" }}
                             <a href="{{ $.Site.Params.app.github }}/releases/latest" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 bg-gray-200 text-gray-700 hover:bg-gray-300" target="_blank">{{ .label }}</a>
                             {{ else }}
@@ -230,9 +232,6 @@
 {{ end }}
 
 {{ define "scripts" }}
-<!-- 首先加载自动生成的校验码文件 -->
-<script src="{{ "js/checksums-auto.js" | relURL }}"></script>
-
 {{ $downloadScript := resources.Get "js/download.js" }}
 {{ if $downloadScript }}
   {{ $minifiedScript := $downloadScript | resources.Minify }}

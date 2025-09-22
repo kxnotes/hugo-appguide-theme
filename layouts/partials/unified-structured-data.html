@@ -12,7 +12,7 @@
     "@type": "Organization",
     "name": "{{ .Site.Params.author }}",
     "url": "{{ .Site.BaseURL }}"{{ if not .IsHome }},
-    "logo": "{{ .Site.Params.app.logo | default "placeholder-app.svg" | absURL }}"{{ end }}
+    "logo": "{{ "hiddify-next-mobile.webp" | absURL }}"{{ end }}
   }{{ if .IsHome }},
   "potentialAction": {
     "@type": "SearchAction",
@@ -29,7 +29,7 @@
   "@type": "Organization",
   "name": "{{ .Site.Params.author }}",
   "url": "{{ .Site.BaseURL }}",
-  "logo": "{{ .Site.Params.app.logo | default "hiddify-next-mobile.webp" | absURL }}",
+  "logo": "{{ "hiddify-next-mobile.webp" | absURL }}",
   "sameAs": [
     "{{ .Site.Params.app.github }}"
   ],
@@ -78,7 +78,7 @@
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "{{ .Site.Params.app.name }}",
+  "name": "Hiddify Next",
   "applicationCategory": "NetworkApplication",
   "operatingSystem": "Windows, macOS, Linux, Android, iOS",
   "description": "{{ .Site.Params.app.tagline }}",
@@ -87,7 +87,7 @@
   "softwareVersion": "{{ .Site.Params.downloads.latest_version }}",
   "author": {
     "@type": "Organization",
-    "name": "{{ .Site.Params.app.author | default (.Site.Params.app.name | printf "%s Team") }}",
+    "name": "Hiddify Next Team",
     "url": "{{ .Site.Params.app.official_site }}"
   },
   "offers": {
@@ -134,7 +134,7 @@
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "{{ .Site.Params.app.name }}",
+  "name": "Hiddify Next",
   "applicationCategory": "NetworkApplication",
   "operatingSystem": "Windows, macOS, Linux, Android, iOS",
   "description": "{{ .Site.Params.app.tagline }}",
@@ -169,7 +169,7 @@
   },
   "fileSize": "50MB",
   "installUrl": "{{ .Site.Params.app.github }}/releases",
-  "screenshot": "{{ .Site.Params.app.screenshot | default "placeholder-app.svg" | absURL }}",
+  "screenshot": "{{ "hiddify-next-mobile.webp" | absURL }}",
   "featureList": [
     "多协议支持",
     "跨平台兼容",
@@ -240,7 +240,7 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "如何安装 {{ .Site.Params.app.name }}？",
+      "name": "如何安装 Hiddify Next？",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "根据您的操作系统，访问下载中心选择对应版本下载安装。Windows 用户下载 .exe 文件，macOS 用户下载 .dmg 文件，Linux 用户下载 .AppImage 文件。"
@@ -251,7 +251,7 @@
       "name": "如何导入订阅链接？",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "打开 {{ .Site.Params.app.name }} 应用，点击 '+' 按钮，选择 '从剪贴板导入' 或 '从 URL 导入'，粘贴您的订阅链接即可。"
+        "text": "打开 Hiddify Next 应用，点击 '+' 按钮，选择 '从剪贴板导入' 或 '从 URL 导入'，粘贴您的订阅链接即可。"
       }
     },
     {
@@ -267,7 +267,7 @@
       "name": "支持哪些操作系统？",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "{{ .Site.Params.app.name }} 支持 Windows 10+、macOS 10.15+、Linux、Android 7.0+ 和 iOS 15.0+。"
+        "text": "Hiddify Next 支持 Windows 10+、macOS 10.15+、Linux、Android 7.0+ 和 iOS 15.0+。"
       }
     },
     {
@@ -295,7 +295,7 @@
     "@type": "Organization",
     "name": "{{ .Site.Params.author }}",
     "url": "{{ .Site.BaseURL }}",
-    "logo": "{{ .Site.Params.app.logo | default "placeholder-app.svg" | absURL }}",
+    "logo": "{{ "hiddify-next-mobile.webp" | absURL }}",
     "description": "{{ .Site.Params.description }}",
     "foundingDate": "2024",
     "sameAs": [
@@ -313,7 +313,7 @@
       "addressCountry": "CN"
     },
     "knowsAbout": [
-      "{{ .Site.Params.app.name }}",
+      "Hiddify Next",
       "代理客户端",
       "网络配置",
       "开源软件",
@@ -363,7 +363,7 @@
   "@type": "TechArticle",
   "headline": "{{ .Title }}",
   "description": "{{ .Description }}",
-  "image": "{{ .Site.Params.app.image | default "placeholder-app.svg" | absURL }}",
+  "image": "{{ "hiddify-next-mobile.webp" | absURL }}",
   "author": {
     "@type": "Organization",
     "name": "{{ .Site.Params.author }}",
@@ -374,7 +374,7 @@
     "name": "{{ .Site.Params.author }}",
     "logo": {
       "@type": "ImageObject",
-      "url": "{{ .Site.Params.app.image | default "placeholder-app.svg" | absURL }}"
+      "url": "{{ "hiddify-next-mobile.webp" | absURL }}"
     }
   },
   "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
@@ -392,7 +392,7 @@
   "about": [
     {
       "@type": "Thing",
-      "name": "{{ .Site.Params.app.name }}"
+      "name": "Hiddify Next"
     },
     {
       "@type": "Thing", 
@@ -410,7 +410,7 @@
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "{{ .Site.Params.app.name }}",
+  "name": "Hiddify Next",
   "applicationCategory": "NetworkApplication",
   "operatingSystem": "{{ with .Params.platforms }}{{ delimit . ", " }}{{ else }}Windows, macOS, Linux, Android, iOS{{ end }}",
   "description": "安全、快速、开源的全平台代理客户端",
@@ -451,7 +451,7 @@
         "position": 1,
         "name": "Windows 用户快速入门指南",
         "url": "{{ .Site.BaseURL }}guides/windows-setup/",
-        "description": "详细的 Windows 系统 {{ .Site.Params.app.name }} 安装与配置教程",
+        "description": "详细的 Windows 系统 Hiddify Next 安装与配置教程",
         "difficulty": "简单",
         "timeRequired": "PT10M"
       },
@@ -503,9 +503,9 @@
       {
         "@type": "TechArticle",
         "position": 7,
-        "name": "关于分流规则：{{ .Site.Params.app.name }} 功能说明与替代方案",
+        "name": "关于分流规则：Hiddify Next 功能说明与替代方案",
         "url": "{{ .Site.BaseURL }}guides/routing-rules/",
-        "description": "了解 {{ .Site.Params.app.name }} 的代理模式选择，以及支持高级分流规则的替代客户端推荐",
+        "description": "了解 Hiddify Next 的代理模式选择，以及支持高级分流规则的替代客户端推荐",
         "difficulty": "中等",
         "timeRequired": "PT8M"
       }
@@ -514,7 +514,7 @@
   "about": [
     {
       "@type": "Thing",
-      "name": "{{ .Site.Params.app.name }}"
+      "name": "Hiddify Next"
     },
     {
       "@type": "Thing",
@@ -542,7 +542,7 @@
   "@type": "Article",
   "headline": "{{ .Title }}",
   "description": "{{ .Description }}",
-  "image": "{{ .Site.Params.app.image | default "placeholder-app.svg" | absURL }}",
+  "image": "{{ "hiddify-next-mobile.webp" | absURL }}",
   "author": {
     "@type": "Organization",
     "name": "{{ .Site.Params.author }}",
@@ -553,7 +553,7 @@
     "name": "{{ .Site.Params.author }}",
     "logo": {
       "@type": "ImageObject",
-      "url": "{{ .Site.Params.app.image | default "placeholder-app.svg" | absURL }}"
+      "url": "{{ "hiddify-next-mobile.webp" | absURL }}"
     }
   },
   "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",

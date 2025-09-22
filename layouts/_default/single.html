@@ -1,4 +1,8 @@
-
+{{ define "structured_data" }}
+{{ if eq .Section "guides" }}
+{{ partial "article-structured-data.html" . }}
+{{ end }}
+{{ end }}
 
 {{ define "main" }}
 {{ if eq .Section "guides" }}
