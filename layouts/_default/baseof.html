@@ -17,7 +17,7 @@
     <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}">
     <meta property="og:description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
     {{ if .IsHome }}
-    <meta property="og:image" content="{{ "hiddify-next-mobile.webp" | absURL }}">
+    <meta property="og:image" content="{{ "app-mobile.webp" | absURL }}">
     {{ end }}
     
     <!-- Twitter -->
@@ -26,7 +26,7 @@
     <meta property="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}">
     <meta property="twitter:description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
     {{ if .IsHome }}
-    <meta property="twitter:image" content="{{ "hiddify-next-mobile.webp" | absURL }}">
+    <meta property="twitter:image" content="{{ "app-mobile.webp" | absURL }}">
     {{ end }}
     
     <!-- Favicon -->
@@ -99,7 +99,7 @@
         <div class="max-w-6xl mx-auto px-5 flex flex-wrap justify-between items-center gap-8">
             <div class="text-gray-300">
                 <p class="mb-2 opacity-80">&copy; {{ .Site.Params.site.copyright_year | default "2024" }} {{ .Site.BaseURL | replaceRE "https?://" "" | replaceRE "/$" "" }}</p>
-                <p class="opacity-80">{{ .Site.Params.site.description | default "一个非官方的 Hiddify Next 资源与指南网站。" }}</p>
+                <p class="opacity-80">{{ .Site.Params.site.description | default "一个应用资源与指南网站。" }}</p>
             </div>
             <div class="flex flex-wrap gap-8">
                 {{ range .Site.Menus.main }}

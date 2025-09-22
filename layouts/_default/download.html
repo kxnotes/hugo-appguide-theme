@@ -65,9 +65,9 @@
                         <div class="flex flex-wrap gap-2">
                             {{ range .files }}
                             {{ if eq .type "play" }}
-                            <a href="https://play.google.com/store/apps/details?id=app.hiddify.com" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 bg-gray-200 text-gray-700 hover:bg-gray-300" target="_blank">{{ .label }}</a>
+                            <a href="#" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 bg-gray-200 text-gray-700 hover:bg-gray-300" target="_blank">{{ .label }}</a>
                             {{ else if eq .type "appstore" }}
-                            <a href="https://apps.apple.com/app/hiddify/id6596777532" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg" target="_blank">{{ .label }}</a>
+                            <a href="#" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg" target="_blank">{{ .label }}</a>
                             {{ else if eq .type "ipa" }}
                             <a href="{{ $.Site.Params.app.github }}/releases/latest" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 bg-gray-200 text-gray-700 hover:bg-gray-300" target="_blank">{{ .label }}</a>
                             {{ else }}

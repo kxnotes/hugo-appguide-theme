@@ -12,7 +12,7 @@
     "@type": "Organization",
     "name": "{{ .Site.Params.author }}",
     "url": "{{ .Site.BaseURL }}"{{ if not .IsHome }},
-    "logo": "{{ "hiddify-next-mobile.webp" | absURL }}"{{ end }}
+    "logo": "{{ "app-mobile.webp" | absURL }}"{{ end }}
   }{{ if .IsHome }},
   "potentialAction": {
     "@type": "SearchAction",
@@ -29,7 +29,7 @@
   "@type": "Organization",
   "name": "{{ .Site.Params.author }}",
   "url": "{{ .Site.BaseURL }}",
-  "logo": "{{ "hiddify-next-mobile.webp" | absURL }}",
+  "logo": "{{ "app-mobile.webp" | absURL }}",
   "sameAs": [
     "{{ .Site.Params.app.github }}"
   ],
@@ -78,7 +78,7 @@
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "Hiddify Next",
+  "name": "应用程序",
   "applicationCategory": "NetworkApplication",
   "operatingSystem": "Windows, macOS, Linux, Android, iOS",
   "description": "{{ .Site.Params.app.tagline }}",
@@ -87,7 +87,7 @@
   "softwareVersion": "{{ .Site.Params.downloads.latest_version }}",
   "author": {
     "@type": "Organization",
-    "name": "Hiddify Next Team",
+    "name": "应用开发团队",
     "url": "{{ .Site.Params.app.official_site }}"
   },
   "offers": {
@@ -103,7 +103,7 @@
 {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": "Hiddify Next 特色功能",
+  "name": "应用特色功能",
   "description": "主要功能特性列表",
   "itemListElement": [
     {
@@ -116,7 +116,7 @@
       "@type": "Thing",
       "position": 2,
       "name": "拥抱最新协议",
-      "description": "原生支持 Reality, TUIC, Hysteria, VLESS 等多种最新协议"
+      "description": "原生支持多种最新协议"
     },
     {
       "@type": "Thing",
@@ -134,7 +134,7 @@
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "Hiddify Next",
+  "name": "应用程序",
   "applicationCategory": "NetworkApplication",
   "operatingSystem": "Windows, macOS, Linux, Android, iOS",
   "description": "{{ .Site.Params.app.tagline }}",
@@ -145,12 +145,12 @@
   "datePublished": "{{ .Site.Params.downloads.release_date }}",
   "author": {
     "@type": "Organization",
-    "name": "Hiddify Next Team",
+    "name": "应用开发团队",
     "url": "{{ .Site.Params.app.official_site }}"
   },
   "publisher": {
     "@type": "Organization",
-    "name": "Hiddify Next Team",
+    "name": "应用开发团队",
     "url": "{{ .Site.Params.app.official_site }}"
   },
   "offers": {
@@ -169,7 +169,7 @@
   },
   "fileSize": "50MB",
   "installUrl": "{{ .Site.Params.app.github }}/releases",
-  "screenshot": "{{ "hiddify-next-mobile.webp" | absURL }}",
+  "screenshot": "{{ "app-mobile.webp" | absURL }}",
   "featureList": [
     "多协议支持",
     "跨平台兼容",
@@ -184,13 +184,13 @@
 {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": "Hiddify Next 下载版本",
+  "name": "应用下载版本",
   "description": "各平台下载版本列表",
   "itemListElement": [
     {
       "@type": "SoftwareApplication",
       "position": 1,
-      "name": "Hiddify Next Windows",
+      "name": "应用程序 Windows",
       "operatingSystem": "Windows",
       "downloadUrl": "{{ .Site.Params.app.github }}/releases",
       "fileFormat": "exe"
@@ -198,7 +198,7 @@
     {
       "@type": "SoftwareApplication", 
       "position": 2,
-      "name": "Hiddify Next macOS",
+      "name": "应用程序 macOS",
       "operatingSystem": "macOS",
       "downloadUrl": "{{ .Site.Params.app.github }}/releases",
       "fileFormat": "dmg"
@@ -206,7 +206,7 @@
     {
       "@type": "SoftwareApplication",
       "position": 3,
-      "name": "Hiddify Next Linux",
+      "name": "应用程序 Linux",
       "operatingSystem": "Linux", 
       "downloadUrl": "{{ .Site.Params.app.github }}/releases",
       "fileFormat": "AppImage"
@@ -214,7 +214,7 @@
     {
       "@type": "SoftwareApplication",
       "position": 4,
-      "name": "Hiddify Next Android",
+      "name": "应用程序 Android",
       "operatingSystem": "Android",
       "downloadUrl": "{{ .Site.Params.app.github }}/releases",
       "fileFormat": "apk"
@@ -222,7 +222,7 @@
     {
       "@type": "SoftwareApplication",
       "position": 5,
-      "name": "Hiddify Next iOS",
+      "name": "应用程序 iOS",
       "operatingSystem": "iOS",
       "downloadUrl": "{{ .Site.Params.app.github }}/releases",
       "fileFormat": "ipa"
@@ -240,7 +240,7 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "如何安装 Hiddify Next？",
+      "name": "如何安装应用程序？",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "根据您的操作系统，访问下载中心选择对应版本下载安装。Windows 用户下载 .exe 文件，macOS 用户下载 .dmg 文件，Linux 用户下载 .AppImage 文件。"
@@ -251,7 +251,7 @@
       "name": "如何导入订阅链接？",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "打开 Hiddify Next 应用，点击 '+' 按钮，选择 '从剪贴板导入' 或 '从 URL 导入'，粘贴您的订阅链接即可。"
+        "text": "打开应用程序，点击 '+' 按钮，选择 '从剪贴板导入' 或 '从 URL 导入'，粘贴您的订阅链接即可。"
       }
     },
     {
@@ -267,7 +267,7 @@
       "name": "支持哪些操作系统？",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Hiddify Next 支持 Windows 10+、macOS 10.15+、Linux、Android 7.0+ 和 iOS 15.0+。"
+        "text": "应用程序支持 Windows 10+、macOS 10.15+、Linux、Android 7.0+ 和 iOS 15.0+。"
       }
     },
     {
@@ -295,7 +295,7 @@
     "@type": "Organization",
     "name": "{{ .Site.Params.author }}",
     "url": "{{ .Site.BaseURL }}",
-    "logo": "{{ "hiddify-next-mobile.webp" | absURL }}",
+    "logo": "{{ "app-mobile.webp" | absURL }}",
     "description": "{{ .Site.Params.description }}",
     "foundingDate": "2024",
     "sameAs": [
@@ -313,7 +313,7 @@
       "addressCountry": "CN"
     },
     "knowsAbout": [
-      "Hiddify Next",
+      "应用程序",
       "代理客户端",
       "网络配置",
       "开源软件",
@@ -321,7 +321,7 @@
     ],
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
-      "name": "Hiddify Next 服务",
+      "name": "应用服务",
       "itemListElement": [
         {
           "@type": "Offer",
@@ -363,7 +363,7 @@
   "@type": "TechArticle",
   "headline": "{{ .Title }}",
   "description": "{{ .Description }}",
-  "image": "{{ "hiddify-next-mobile.webp" | absURL }}",
+  "image": "{{ "app-mobile.webp" | absURL }}",
   "author": {
     "@type": "Organization",
     "name": "{{ .Site.Params.author }}",
@@ -374,7 +374,7 @@
     "name": "{{ .Site.Params.author }}",
     "logo": {
       "@type": "ImageObject",
-      "url": "{{ "hiddify-next-mobile.webp" | absURL }}"
+      "url": "{{ "app-mobile.webp" | absURL }}"
     }
   },
   "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
@@ -392,7 +392,7 @@
   "about": [
     {
       "@type": "Thing",
-      "name": "Hiddify Next"
+      "name": "应用程序"
     },
     {
       "@type": "Thing", 
@@ -410,7 +410,7 @@
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "Hiddify Next",
+  "name": "应用程序",
   "applicationCategory": "NetworkApplication",
   "operatingSystem": "{{ with .Params.platforms }}{{ delimit . ", " }}{{ else }}Windows, macOS, Linux, Android, iOS{{ end }}",
   "description": "安全、快速、开源的全平台代理客户端",
@@ -420,7 +420,7 @@
   "releaseNotes": "{{ .Site.Params.app.github }}/releases",
   "author": {
     "@type": "Organization",
-    "name": "Hiddify Next Team",
+    "name": "应用开发团队",
     "url": "{{ .Site.Params.app.official_site }}"
   },
   "offers": {
@@ -443,7 +443,7 @@
   "url": "{{ .Permalink }}",
   "mainEntity": {
     "@type": "ItemList",
-    "name": "Hiddify Next 教程列表",
+    "name": "应用教程列表",
     "description": "从入门到进阶的完整教程集合",
     "itemListElement": [
       {
@@ -451,7 +451,7 @@
         "position": 1,
         "name": "Windows 用户快速入门指南",
         "url": "{{ .Site.BaseURL }}guides/windows-setup/",
-        "description": "详细的 Windows 系统 Hiddify Next 安装与配置教程",
+        "description": "详细的 Windows 系统应用安装与配置教程",
         "difficulty": "简单",
         "timeRequired": "PT10M"
       },
@@ -503,9 +503,9 @@
       {
         "@type": "TechArticle",
         "position": 7,
-        "name": "关于分流规则：Hiddify Next 功能说明与替代方案",
+        "name": "关于分流规则：应用功能说明与替代方案",
         "url": "{{ .Site.BaseURL }}guides/routing-rules/",
-        "description": "了解 Hiddify Next 的代理模式选择，以及支持高级分流规则的替代客户端推荐",
+        "description": "了解应用的代理模式选择，以及支持高级分流规则的替代客户端推荐",
         "difficulty": "中等",
         "timeRequired": "PT8M"
       }
@@ -514,7 +514,7 @@
   "about": [
     {
       "@type": "Thing",
-      "name": "Hiddify Next"
+      "name": "应用程序"
     },
     {
       "@type": "Thing",
@@ -542,7 +542,7 @@
   "@type": "Article",
   "headline": "{{ .Title }}",
   "description": "{{ .Description }}",
-  "image": "{{ "hiddify-next-mobile.webp" | absURL }}",
+  "image": "{{ "app-mobile.webp" | absURL }}",
   "author": {
     "@type": "Organization",
     "name": "{{ .Site.Params.author }}",
@@ -553,7 +553,7 @@
     "name": "{{ .Site.Params.author }}",
     "logo": {
       "@type": "ImageObject",
-      "url": "{{ "hiddify-next-mobile.webp" | absURL }}"
+      "url": "{{ "app-mobile.webp" | absURL }}"
     }
   },
   "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",

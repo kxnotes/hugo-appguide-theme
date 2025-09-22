@@ -13,7 +13,7 @@
     "tailwindcss",
     "app-guide"
   ],
-  "author": "Hiddify Team",
+  "author": "AppGuide Theme Team",
   "license": "MIT",
   "devDependencies": {
     "tailwindcss": "^3.4.0",

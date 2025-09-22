@@ -100,7 +100,7 @@ function showErrorNotification(message) {
 async function getLatestStableRelease() {
     try {
         // 获取所有发布版本（前20个应该足够了）
-        const response = await fetch('https://api.github.com/repos/hiddify/hiddify-next/releases?per_page=20');
+        const response = await fetch('https://api.github.com/repos/example/example-app/releases?per_page=20');
         
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -160,7 +160,7 @@ async function checkLatestVersion() {
         console.log('正在获取最新版本信息...');
         
         // 首先获取最新版本
-        const latestResponse = await fetch('https://api.github.com/repos/hiddify/hiddify-next/releases/latest');
+        const latestResponse = await fetch('https://api.github.com/repos/example/example-app/releases/latest');
         
         if (!latestResponse.ok) {
             throw new Error(`HTTP ${latestResponse.status}: ${latestResponse.statusText}`);
