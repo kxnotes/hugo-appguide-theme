@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en" }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}</title>
+    <meta name="description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+    
+    <!-- Google Search Console Verification -->
+    {{ with .Site.Params.google_site_verification }}
+    <meta name="google-site-verification" content="{{ . }}" />
+    {{ end }}
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ .Permalink }}">
+    <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}">
+    <meta property="og:description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+    {{ if .IsHome }}
+    <meta property="og:image" content="{{ .Site.Params.app.image | default "placeholder-app.svg" | absURL }}">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:image:type" content="image/svg+xml">
+    <meta property="og:site_name" content="{{ .Site.Title }}">
+    {{ end }}
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ if .Title }}{{ .Title }} - {{ .Site.Title }}{{ else }}{{ .Site.Title }}{{ end }}">
+    <meta name="twitter:description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.app.tagline | default .Site.Params.description }}{{ end }}">
+    {{ if .IsHome }}
+    <meta name="twitter:image" content="{{ .Site.Params.app.image | default "placeholder-app.svg" | absURL }}">
+    {{ end }}
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ .Site.Params.app.favicon | default "/favicon.ico" }}">
+<link rel="apple-touch-icon" href="{{ .Site.Params.app.favicon | default "/favicon.ico" }}">
+<link rel="shortcut icon" href="{{ .Site.Params.app.favicon | default "/favicon.ico" }}">
+    
+    <!-- Styles -->
+    {{ $style := resources.Get "css/main.css" }}
+    {{ if $style }}
+        {{ $style = $style | css.PostCSS | resources.Minify }}
+        <link rel="stylesheet" href="{{ $style.Permalink }}">
+    {{ else }}
+        <!-- Fallback: try direct path if resource pipeline fails -->
+        <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+    {{ end }}
+    
+    <!-- Custom CSS -->
+    {{ range .Site.Params.custom_css }}
+    <link rel="stylesheet" href="{{ . }}">
+    {{ end }}
+    
+    <!-- RSS -->
+    {{ with .OutputFormats.Get "rss" -}}
+    {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+    {{ end -}}
+    
+    <!-- JSON Feed -->
+    {{ if .OutputFormats.Get "JSON" }}
+    <link rel="alternate" type="application/json" title="{{ .Site.Title }}" href="{{ "/feed.json" | absURL }}" />
+    {{ end }}
+    
+    <!-- Structured Data -->
+    {{ partial "unified-structured-data.html" . }}
+</head>
+<body class="font-sans text-gray-900 bg-white">
+    <!-- 导航栏 -->
+    <nav class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-5 flex justify-between items-center h-16">
+            <div class="text-blue-600 text-xl font-bold">
+                <h2>{{ .Site.Title }}</h2>
+            </div>
+            <ul class="hidden md:flex space-x-8">
+                {{ range .Site.Menus.main }}
+                <li>
+                    <a href="{{ .URL }}" class="text-gray-600 hover:text-blue-600 font-medium transition-colors duration-300 relative {{ if $.IsMenuCurrent "main" . }}text-blue-600{{ end }}">
+                        {{ .Name }}
+                        {{ if $.IsMenuCurrent "main" . }}
+                        <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-blue-600"></span>
+                        {{ end }}
+                    </a>
+                </li>
+                {{ end }}
+            </ul>
+            <div class="md:hidden flex flex-col cursor-pointer">
+                <span class="w-6 h-0.5 bg-gray-700 mb-1 transition-all duration-300"></span>
+                <span class="w-6 h-0.5 bg-gray-700 mb-1 transition-all duration-300"></span>
+                <span class="w-6 h-0.5 bg-gray-700 transition-all duration-300"></span>
+            </div>
+        </div>
+    </nav>
+    
+    <main>
+        {{ block "main" . }}{{ end }}
+    </main>
+    
+    <!-- 页脚 -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-6xl mx-auto px-5 flex flex-wrap justify-between items-center gap-8">
+            <div class="text-gray-300">
+                <p class="mb-2 opacity-80">&copy; {{ .Site.Params.site.copyright_year | default "2024" }} {{ .Site.BaseURL | replaceRE "https?://" "" | replaceRE "/$" "" }}</p>
+                <p class="opacity-80">{{ .Site.Params.site.description | default "一个非官方的 Hiddify Next 资源与指南网站。" }}</p>
+            </div>
+            <div class="flex flex-wrap gap-8">
+                {{ range .Site.Menus.main }}
+                <a href="{{ .URL }}" class="text-gray-300 hover:text-white transition-colors duration-300">{{ .Name }}</a>
+                {{ end }}
+                {{ with .Site.Params.app.github }}
+                <a href="{{ . }}" target="_blank" rel="noopener" class="text-gray-300 hover:text-white transition-colors duration-300">官方 GitHub</a>
+                {{ end }}
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    {{ $script := resources.Get "js/main.js" }}
+    {{ if $script }}
+      {{ $minifiedScript := $script | resources.Minify }}
+      <script src="{{ $minifiedScript.Permalink }}"></script>
+    {{ else }}
+      <script src="{{ "js/main.js" | relURL }}"></script>
+    {{ end }}
+    
+    <!-- Page-specific scripts -->
+    {{ block "scripts" . }}{{ end }}
+    
+    <!-- Custom JS -->
+    {{ range .Site.Params.custom_js }}
+    <script src="{{ . }}"></script>
+    {{ end }}
+    
+    <!-- Analytics -->
+    {{ partial "analytics.html" . }}
+</body>
+</html>

@@ -1,0 +1,4 @@
+<div class="warning-box">
+    <h4>⚠️ {{ .Get "title" | default "警告" }}</h4>
+    {{ .Inner | markdownify }}
+</div>

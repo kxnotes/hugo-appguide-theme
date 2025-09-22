@@ -1,0 +1,4 @@
+<div class="tip-box">
+    <h4>💡 {{ .Get "title" | default "提示" }}</h4>
+    {{ .Inner | markdownify }}
+</div>

@@ -1,0 +1,243 @@
+
+
+{{ define "main" }}
+<div class="pt-24 min-h-screen">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{{ .Title | default "下载" }} {{ .Site.Params.app.name }}</h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">{{ .Description | default "选择适合您设备的版本，开始安全的网络体验" }}</p>
+        </div>
+
+        <!-- 安全提示 -->
+        <div class="bg-gradient-to-r from-yellow-50 to-yellow-100 border-2 border-yellow-400 rounded-2xl p-8 mb-12 flex items-start gap-4">
+            <div class="text-3xl flex-shrink-0">⚠️</div>
+            <div>
+                <h3 class="text-yellow-800 text-xl font-semibold mb-2">安全提示</h3>
+                <p class="text-yellow-700 leading-relaxed m-0">为确保您的安全，本站所有下载链接均直接指向 {{ .Site.Params.app.name }} 官方 GitHub Releases 页面。我们绝不提供任何修改版或第三方安装包。请校验文件以确保安全。</p>
+            </div>
+        </div>
+
+        <!-- 下载表格 -->
+        <div class="mb-16">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="bg-blue-600 text-white p-6 grid grid-cols-5 gap-4 font-semibold hidden md:grid">
+                    <div>操作系统</div>
+                    <div>最新版本</div>
+                    <div>更新日期</div>
+                    <div>下载链接</div>
+                    <div>校验和</div>
+                </div>
+
+                {{ range .Site.Params.downloads.platforms }}
+                <div class="p-6 grid grid-cols-1 md:grid-cols-5 gap-4 items-center border-b border-gray-100 hover:bg-gray-50 transition-colors duration-300 last:border-b-0">
+                    <div class="flex justify-between items-center py-2 border-b border-gray-100 md:border-b-0 md:block">
+                        <span class="font-semibold text-gray-700 md:hidden">平台:</span>
+                        <div class="flex items-center space-x-4">
+                            <span class="text-3xl">{{ .icon }}</span>
+                            <div>
+                                <div class="font-semibold text-gray-900">{{ .name }}</div>
+                                <div class="text-sm text-gray-600">{{ .description }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-100 md:border-b-0 md:block">
+                        <span class="font-semibold text-gray-700 md:hidden">版本:</span>
+                        {{ if eq .status "coming_soon" }}
+                        <span class="bg-gray-500 text-white px-3 py-1 rounded-full text-sm font-medium">即将发布</span>
+                        {{ else if .version }}
+                        <span class="bg-emerald-500 text-white px-3 py-1 rounded-full text-sm font-medium">{{ .version }}</span>
+                        {{ else }}
+                        <span class="bg-emerald-500 text-white px-3 py-1 rounded-full text-sm font-medium">{{ $.Site.Params.downloads.latest_version }}</span>
+                        {{ end }}
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-100 md:border-b-0 md:block text-gray-600">
+                        <span class="font-semibold text-gray-700 md:hidden">日期:</span>
+                        {{ if eq .status "coming_soon" }}
+                        -
+                        {{ else }}
+                        {{ $.Site.Params.downloads.release_date }}
+                        {{ end }}
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-100 md:border-b-0 md:block">
+                        <span class="font-semibold text-gray-700 md:hidden">下载:</span>
+                        <div class="flex flex-wrap gap-2">
+                            {{ range .files }}
+                            {{ if eq .type "play" }}
+                            <a href="{{ $.Site.Params.app.play_store_url | default "https://play.google.com/store/apps" }}" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 bg-gray-200 text-gray-700 hover:bg-gray-300" target="_blank">{{ .label }}</a>
+                            {{ else if eq .type "appstore" }}
+                            <a href="{{ $.Site.Params.app.app_store_url | default "https://apps.apple.com" }}" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg" target="_blank">{{ .label }}</a>
+                            {{ else if eq .type "ipa" }}
+                            <a href="{{ $.Site.Params.app.github }}/releases/latest" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 bg-gray-200 text-gray-700 hover:bg-gray-300" target="_blank">{{ .label }}</a>
+                            {{ else }}
+                            <a href="{{ $.Site.Params.app.github }}/releases/latest" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg" target="_blank">{{ .label }}</a>
+                            {{ end }}
+                            {{ end }}
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center py-2 md:border-b-0">
+                        <span class="font-semibold text-gray-700 md:hidden">校验:</span>
+                        {{ if ne .status "coming_soon" }}
+                        <button class="bg-gray-100 border border-gray-300 text-gray-600 px-4 py-2 rounded-lg cursor-pointer text-sm transition-all duration-300 hover:bg-gray-200 hover:border-gray-400" onclick="showChecksum('{{ .name | lower | replaceRE `[^a-z0-9]+` `-` | replaceRE `apple-silicon|intel` `universal` }}')">SHA256</button>
+                        {{ else }}
+                        <span class="text-gray-400">-</span>
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+
+        <!-- 安装说明 -->
+        <div class="mb-16">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">安装说明</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-900">🖥️ Windows 用户</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                下载 .exe 文件直接安装，或下载 .zip 文件解压使用
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                首次运行时，Windows Defender 可能会提示，请选择"允许"
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                建议以管理员权限运行以获得最佳体验
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-900">🍎 macOS 用户</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                下载对应芯片版本的 .dmg 或 .pkg 文件
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                .dmg 文件：双击安装，拖拽到应用程序文件夹
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                .pkg 文件：双击运行安装程序，按照向导完成安装
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                首次打开时需要在"系统偏好设置 > 安全性与隐私"中允许
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                Universal 版本兼容所有 Mac 设备（Intel 和 Apple Silicon）
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-900">📱 Android 用户</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                推荐从 Google Play 下载，更新更及时
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                GitHub 版本可能需要开启"未知来源"安装权限
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                支持 Android 7.0 及以上版本
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-900">📱 iOS 用户</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                推荐从 App Store 下载，安全且自动更新
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                .ipa 包适用于侧载安装，需要使用 AltStore、Sideloadly 等工具
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                侧载安装需要一定技术基础，免费 Apple ID 每 7 天需重新安装
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-blue-600 mr-2">•</span>
+                                支持 iOS 15.0 及以上版本
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 版本信息卡片 -->
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl p-8 mb-8">
+            <div class="flex items-center justify-center gap-4 mb-6">
+                <span class="text-4xl">📦</span>
+                <h2 class="text-2xl font-bold text-green-900">当前版本信息</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 text-center">
+                <div>
+                    <h3 class="text-lg font-semibold text-green-900 mb-3">最新版本</h3>
+                    <div class="text-3xl font-bold text-green-700 mb-2">{{ .Site.Params.downloads.latest_version }}</div>
+                    <p class="text-green-600">稳定版本</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-green-900 mb-3">发布日期</h3>
+                    <div class="text-3xl font-bold text-green-700 mb-2">{{ .Site.Params.downloads.release_date }}</div>
+                    <p class="text-green-600">最后更新</p>
+                </div>
+            </div>
+            
+            <!-- <div class="text-center mt-6">
+                <a href="{{ .Site.Params.app.github }}/releases/latest" target="_blank" rel="noopener" class="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-1 shadow-md hover:shadow-lg">
+                    查看完整更新日志
+                </a>
+            </div> -->
+        </div>
+
+        <!-- 版本说明与更新内容 -->
+        <div class="prose prose-lg max-w-none mx-auto bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+            {{ .Content }}
+        </div>
+    </div>
+</div>
+
+<!-- 校验和弹窗 -->
+<div id="checksumModal" class="fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+        <div class="flex justify-between items-center p-6 border-b border-gray-200">
+            <h3 class="text-xl font-semibold text-gray-900">文件校验和</h3>
+            <button class="text-gray-400 hover:text-gray-600 text-2xl font-bold close">&times;</button>
+        </div>
+        <div id="checksumContent" class="p-6"></div>
+    </div>
+</div>
+{{ end }}
+
+{{ define "scripts" }}
+<!-- 首先加载自动生成的校验码文件 -->
+<script src="{{ "js/checksums-auto.js" | relURL }}"></script>
+
+{{ $downloadScript := resources.Get "js/download.js" }}
+{{ if $downloadScript }}
+  {{ $minifiedScript := $downloadScript | resources.Minify }}
+  <script src="{{ $minifiedScript.Permalink }}"></script>
+{{ else }}
+  <script src="{{ "js/download.js" | relURL }}"></script>
+{{ end }}
+{{ end }}

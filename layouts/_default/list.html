@@ -1,0 +1,50 @@
+
+
+{{ define "main" }}
+<div class="pt-24 min-h-screen">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="text-center mb-12">
+            <h1 class="text-3xl md:text-5xl font-bold text-gray-900 mb-4">{{ .Title }}</h1>
+            {{ with .Description }}
+            <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">{{ . }}</p>
+            {{ end }}
+        </div>
+
+        {{ if eq .Section "guides" }}
+        <!-- 教程页面特殊布局 -->
+        {{ partial "guides-list.html" . }}
+        {{ else if eq .Section "faq" }}
+        <!-- FAQ 页面特殊布局 -->
+        {{ partial "faq-list.html" . }}
+        {{ else }}
+        <!-- 通用列表布局 -->
+        {{ partial "generic-list.html" . }}
+        {{ end }}
+
+        <!-- 自定义内容 -->
+        <div class="prose prose-lg max-w-none mx-auto mt-12">
+            {{ .Content }}
+        </div>
+    </div>
+</div>
+{{ end }}
+
+{{ define "scripts" }}
+{{ if eq .Section "guides" }}
+{{ $guidesScript := resources.Get "js/guides.js" }}
+{{ if $guidesScript }}
+  {{ $minifiedScript := $guidesScript | resources.Minify }}
+  <script src="{{ $minifiedScript.Permalink }}"></script>
+{{ else }}
+  <script src="{{ "js/guides.js" | relURL }}"></script>
+{{ end }}
+{{ else if eq .Section "faq" }}
+{{ $faqScript := resources.Get "js/faq.js" }}
+{{ if $faqScript }}
+  {{ $minifiedScript := $faqScript | resources.Minify }}
+  <script src="{{ $minifiedScript.Permalink }}"></script>
+{{ else }}
+  <script src="{{ "js/faq.js" | relURL }}"></script>
+{{ end }}
+{{ end }}
+{{ end }}

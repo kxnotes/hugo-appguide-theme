@@ -1,0 +1,86 @@
+
+
+{{ define "main" }}
+<div class="pt-24 min-h-screen">
+    <div class="max-w-4xl mx-auto px-5">
+        <!-- 页面头部 -->
+        <div class="text-center mb-12">
+            <h1 class="text-3xl md:text-5xl font-bold text-gray-900 mb-4">{{ .Title }}</h1>
+            {{ with .Description }}
+            <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">{{ . }}</p>
+            {{ end }}
+        </div>
+        
+        <!-- 主要内容 -->
+        <div class="prose prose-lg max-w-none mx-auto mb-16">
+            {{ .Content }}
+        </div>
+
+        <!-- 联系信息卡片 -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-12 border border-gray-100">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">联系我们</h2>
+            <p class="text-gray-600 text-center mb-8 leading-relaxed">
+                如果您对本站内容有任何建议、发现错误或希望参与贡献，欢迎通过以下方式与我们联系：
+            </p>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="flex items-start gap-4 p-6 bg-gray-50 rounded-2xl border border-gray-200">
+                    <span class="text-3xl flex-shrink-0 mt-1">📧</span>
+                    <div class="min-w-0 flex-1">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">电子邮件</h3>
+                        <a href="mailto:{{ .Site.Params.contact.email }}" class="text-blue-600 hover:text-blue-700 transition-colors duration-300 font-medium break-all">Contact Us</a>
+                        <p class="text-gray-600 text-sm mt-1">一般咨询和建议</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-4 p-6 bg-gray-50 rounded-2xl border border-gray-200">
+                    <span class="text-3xl flex-shrink-0 mt-1">🐛</span>
+                    <div class="min-w-0 flex-1">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">问题报告</h3>
+                        <a href="{{ .Site.Params.contact.github_issues }}" target="_blank" rel="noopener" class="text-blue-600 hover:text-blue-700 transition-colors duration-300 font-medium break-words">GitHub Issues</a>
+                        <p class="text-gray-600 text-sm mt-1">报告网站问题或bug</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-4 p-6 bg-gray-50 rounded-2xl border border-gray-200">
+                    <span class="text-3xl flex-shrink-0 mt-1">💬</span>
+                    <div class="min-w-0 flex-1">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">社区讨论</h3>
+                        <a href="{{ .Site.Params.contact.github_discussions }}" target="_blank" rel="noopener" class="text-blue-600 hover:text-blue-700 transition-colors duration-300 font-medium break-words">GitHub Discussions</a>
+                        <p class="text-gray-600 text-sm mt-1">参与社区讨论</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 网站信息卡片 -->
+        <div class="mb-12 bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-200 rounded-2xl p-8 text-center">
+            <div class="flex items-center justify-center gap-4 mb-6">
+                <span class="text-4xl">ℹ️</span>
+                <h2 class="text-2xl font-bold text-blue-900">网站信息</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 text-left">
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-900 mb-3">基本信息</h3>
+                    <ul class="space-y-2 text-blue-800">
+                        <li><strong>网站域名:</strong> {{ .Site.BaseURL | replaceRE "https?://" "" | replaceRE "/$" "" }}</li>
+                        <li><strong>网站性质:</strong> {{ if .Site.Params.site.is_official }}官方网站{{ else }}非官方社区网站{{ end }}</li>
+                        <li><strong>建立时间:</strong> {{ .Site.Params.site.copyright_year }}年</li>
+                        <li><strong>关联项目:</strong> <a href="{{ .Site.Params.app.github }}" target="_blank" class="text-blue-600 hover:text-blue-700 transition-colors duration-300">{{ .Site.Params.app.name }}</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-blue-900 mb-3">版权许可</h3>
+                    <ul class="space-y-2 text-blue-800">
+                        <li><strong>内容许可:</strong> <a href="{{ .Site.Params.site.license_url }}" target="_blank" class="text-blue-600 hover:text-blue-700 transition-colors duration-300">{{ .Site.Params.site.license }}</a></li>
+                        <li><strong>版权所有:</strong> © {{ .Site.Params.site.copyright_year }} {{ .Site.BaseURL | replaceRE "https?://" "" | replaceRE "/$" "" }}</li>
+                        <li><strong>网站描述:</strong> {{ .Site.Params.site.description }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{ end }}

@@ -1,0 +1,10 @@
+{{ if .TableOfContents }}
+<div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
+    <h3 class="bg-gray-50 px-6 py-4 m-0 text-base font-semibold text-gray-900 border-b border-gray-200">目录</h3>
+    <nav class="p-0">
+        <div class="prose-sm max-w-none [&>ul]:list-none [&>ul]:p-0 [&>ul]:m-0 [&_li]:m-0 [&_a]:block [&_a]:px-6 [&_a]:py-2 [&_a]:text-gray-600 [&_a]:no-underline [&_a]:text-sm [&_a]:transition-all [&_a]:duration-300 [&_a]:border-l-2 [&_a]:border-transparent hover:[&_a]:text-blue-600 hover:[&_a]:bg-blue-50 hover:[&_a]:border-blue-600">
+        {{ .TableOfContents }}
+        </div>
+    </nav>
+</div>
+{{ end }}

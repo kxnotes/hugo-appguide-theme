@@ -1,0 +1,23 @@
+{
+  "name": "appguide-theme",
+  "version": "1.0.0",
+  "description": "Hugo theme for app guide websites",
+  "main": "index.js",
+  "scripts": {
+    "build-css": "tailwindcss -i ./assets/css/main.css -o ./assets/css/style.css --watch",
+    "build-css-prod": "tailwindcss -i ./assets/css/main.css -o ./assets/css/style.css --minify"
+  },
+  "keywords": [
+    "hugo",
+    "theme",
+    "tailwindcss",
+    "app-guide"
+  ],
+  "author": "Hiddify Team",
+  "license": "MIT",
+  "devDependencies": {
+    "tailwindcss": "^3.4.0",
+    "@tailwindcss/typography": "^0.5.10",
+    "@tailwindcss/forms": "^0.5.7"
+  }
+}

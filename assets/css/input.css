@@ -1,0 +1,168 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 只保留一些必要的全局样式 */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  }
+}
+
+/* 一些实用的工具类 */
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(45deg, #ffffff, #e2e8f0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .hero-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  
+  .card-hover {
+    transition: all 0.3s ease;
+  }
+  
+  .card-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  }
+
+  .toast {
+    @apply fixed bottom-5 right-5 bg-emerald-500 text-white px-6 py-4 rounded-lg shadow-xl transform translate-x-full transition-transform duration-300 z-50;
+  }
+
+  .toast.show {
+    @apply translate-x-0;
+  }
+
+  /* Prose样式增强 */
+  .prose {
+    @apply text-gray-700 leading-relaxed;
+  }
+
+  .prose h1 {
+    @apply text-3xl font-bold text-gray-900 mb-6 mt-8 first:mt-0;
+  }
+
+  .prose h2 {
+    @apply text-2xl font-bold text-gray-900 mb-4 mt-8 pb-2 border-b border-gray-200;
+  }
+
+  .prose h3 {
+    @apply text-xl font-semibold text-gray-900 mb-3 mt-6;
+  }
+
+  .prose h4 {
+    @apply text-lg font-semibold text-gray-900 mb-2 mt-4;
+  }
+
+  .prose p {
+    @apply mb-4 leading-relaxed;
+  }
+
+  .prose ul, .prose ol {
+    @apply mb-4 pl-6;
+  }
+
+  .prose li {
+    @apply mb-2 leading-relaxed;
+  }
+
+  .prose a {
+    @apply text-blue-600 hover:text-blue-700 transition-colors duration-300;
+  }
+
+  .prose code {
+    @apply bg-gray-100 text-gray-900 px-2 py-1 rounded text-sm font-mono;
+  }
+
+  .prose pre {
+    @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4;
+  }
+
+  .prose blockquote {
+    @apply border-l-4 border-blue-500 pl-4 py-2 bg-blue-50 italic mb-4;
+  }
+
+  .prose table {
+    @apply w-full border-collapse mb-4;
+  }
+
+  .prose th {
+    @apply bg-gray-100 border border-gray-300 px-4 py-2 text-left font-semibold;
+  }
+
+  .prose td {
+    @apply border border-gray-300 px-4 py-2;
+  }
+
+  /* FAQ交互样式 */
+  .faq-item.active .faq-question {
+    @apply bg-blue-600 text-white;
+  }
+
+  .faq-item.active .faq-question h3 {
+    @apply text-white;
+  }
+
+  .faq-item.active .toggle-icon {
+    @apply text-white bg-white/20 transform rotate-180;
+  }
+
+  /* 修复加号和减号的对齐问题 */
+  .toggle-icon {
+    @apply leading-none;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Courier New', 'Monaco', monospace;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  /* 确保加号和减号使用相同的Unicode字符 */
+  .toggle-icon::before {
+    content: attr(data-icon);
+    position: relative;
+    top: -1px; /* 微调垂直位置 */
+  }
+
+  .faq-item.active .faq-answer {
+    @apply max-h-screen p-6;
+  }
+
+  .faq-item.highlight {
+    @apply border-blue-500 shadow-md bg-blue-50;
+  }
+
+  /* 高亮标记样式 */
+  mark {
+    @apply bg-yellow-200 text-yellow-900 px-1 rounded;
+  }
+
+  /* 搜索结果样式 */
+  .search-results {
+    @apply bg-blue-50 border border-blue-200 rounded-xl p-6 mb-8 text-center;
+  }
+
+  .search-results p {
+    @apply text-blue-700 mb-2;
+  }
+
+  .no-results {
+    @apply text-gray-600 italic;
+  }
+
+  .no-results a {
+    @apply text-blue-600 no-underline font-medium hover:underline;
+  }
+}

@@ -1,0 +1,36 @@
+User-agent: *
+Allow: /
+
+# 主要页面
+Allow: /download/
+Allow: /guides/
+Allow: /faq/
+Allow: /about/
+
+# 指向 Sitemap
+Sitemap: {{ .Site.BaseURL }}sitemap.xml
+
+# 不需要爬取的路径
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.json$
+Disallow: /*?*
+
+# 允许爬取静态资源但降低优先级
+Allow: /css/
+Allow: /js/
+Allow: /images/
+Allow: /img/
+
+# 针对特定搜索引擎的设置
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# 爬取频率限制
+Crawl-delay: 1

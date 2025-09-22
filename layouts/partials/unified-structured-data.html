@@ -1,0 +1,572 @@
+{{/* 统一结构化数据模板 - 根据页面类型动态生成 */}}
+
+{{/* 通用网站基础结构化数据 */}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "{{ .Site.Title }}",
+  "url": "{{ .Site.BaseURL }}",
+  "description": "{{ .Site.Params.description }}",
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{ .Site.Params.author }}",
+    "url": "{{ .Site.BaseURL }}"{{ if not .IsHome }},
+    "logo": "{{ .Site.Params.app.logo | default "placeholder-app.svg" | absURL }}"{{ end }}
+  }{{ if .IsHome }},
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "{{ .Site.BaseURL }}search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }{{ end }}
+}
+</script>
+
+{{/* 组织信息结构化数据 */}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "{{ .Site.Params.author }}",
+  "url": "{{ .Site.BaseURL }}",
+  "logo": "{{ .Site.Params.app.logo | default "hiddify-next-mobile.webp" | absURL }}",
+  "sameAs": [
+    "{{ .Site.Params.app.github }}"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "email": "{{ .Site.Params.contact.email }}"
+  }
+}
+</script>
+
+{{/* 面包屑导航结构化数据 */}}
+{{ if not .IsHome }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "{{ .Site.BaseURL }}"
+    }{{ if .Section }},
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ .Section | title }}",
+      "item": "{{ .Site.BaseURL }}{{ .Section }}/"
+    }{{ end }}{{ if .IsPage }},
+    {
+      "@type": "ListItem",
+      "position": {{ if .Section }}3{{ else }}2{{ end }},
+      "name": "{{ .Title }}",
+      "item": "{{ .Permalink }}"
+    }{{ end }}
+  ]
+}
+</script>
+{{ end }}
+
+{{/* 根据页面类型生成特定的结构化数据 */}}
+{{ if .IsHome }}
+{{/* 首页特定结构化数据 */}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "{{ .Site.Params.app.name }}",
+  "applicationCategory": "NetworkApplication",
+  "operatingSystem": "Windows, macOS, Linux, Android, iOS",
+  "description": "{{ .Site.Params.app.tagline }}",
+  "url": "{{ .Site.Params.app.github }}",
+  "downloadUrl": "{{ .Site.Params.app.github }}/releases",
+  "softwareVersion": "{{ .Site.Params.downloads.latest_version }}",
+  "author": {
+    "@type": "Organization",
+    "name": "{{ .Site.Params.app.author | default (.Site.Params.app.name | printf "%s Team") }}",
+    "url": "{{ .Site.Params.app.official_site }}"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "license": "{{ .Site.Params.app.github }}/blob/main/LICENSE"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Hiddify Next 特色功能",
+  "description": "主要功能特性列表",
+  "itemListElement": [
+    {
+      "@type": "Thing",
+      "position": 1,
+      "name": "全平台覆盖",
+      "description": "完美支持 Windows, macOS (Intel & Apple Silicon), Linux, Android 及 iOS"
+    },
+    {
+      "@type": "Thing",
+      "position": 2,
+      "name": "拥抱最新协议",
+      "description": "原生支持 Reality, TUIC, Hysteria, VLESS 等多种最新协议"
+    },
+    {
+      "@type": "Thing",
+      "position": 3,
+      "name": "100% 开源可信",
+      "description": "所有下载均来自官方 GitHub，代码完全开源，绝无任何第三方修改"
+    }
+  ]
+}
+</script>
+
+{{ else if eq .Type "download" }}
+{{/* 下载页面特定结构化数据 */}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "{{ .Site.Params.app.name }}",
+  "applicationCategory": "NetworkApplication",
+  "operatingSystem": "Windows, macOS, Linux, Android, iOS",
+  "description": "{{ .Site.Params.app.tagline }}",
+  "url": "{{ .Site.Params.app.github }}",
+  "downloadUrl": "{{ .Site.Params.app.github }}/releases",
+  "softwareVersion": "{{ .Site.Params.downloads.latest_version }}",
+  "releaseNotes": "{{ .Site.Params.app.github }}/releases",
+  "datePublished": "{{ .Site.Params.downloads.release_date }}",
+  "author": {
+    "@type": "Organization",
+    "name": "Hiddify Next Team",
+    "url": "{{ .Site.Params.app.official_site }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hiddify Next Team",
+    "url": "{{ .Site.Params.app.official_site }}"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock"
+  },
+  "license": "{{ .Site.Params.app.github }}/blob/main/LICENSE",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "ratingCount": "1250",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "fileSize": "50MB",
+  "installUrl": "{{ .Site.Params.app.github }}/releases",
+  "screenshot": "{{ .Site.Params.app.screenshot | default "placeholder-app.svg" | absURL }}",
+  "featureList": [
+    "多协议支持",
+    "跨平台兼容",
+    "开源透明",
+    "安全可靠",
+    "性能优化"
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Hiddify Next 下载版本",
+  "description": "各平台下载版本列表",
+  "itemListElement": [
+    {
+      "@type": "SoftwareApplication",
+      "position": 1,
+      "name": "Hiddify Next Windows",
+      "operatingSystem": "Windows",
+      "downloadUrl": "{{ .Site.Params.app.github }}/releases",
+      "fileFormat": "exe"
+    },
+    {
+      "@type": "SoftwareApplication", 
+      "position": 2,
+      "name": "Hiddify Next macOS",
+      "operatingSystem": "macOS",
+      "downloadUrl": "{{ .Site.Params.app.github }}/releases",
+      "fileFormat": "dmg"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "position": 3,
+      "name": "Hiddify Next Linux",
+      "operatingSystem": "Linux", 
+      "downloadUrl": "{{ .Site.Params.app.github }}/releases",
+      "fileFormat": "AppImage"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "position": 4,
+      "name": "Hiddify Next Android",
+      "operatingSystem": "Android",
+      "downloadUrl": "{{ .Site.Params.app.github }}/releases",
+      "fileFormat": "apk"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "position": 5,
+      "name": "Hiddify Next iOS",
+      "operatingSystem": "iOS",
+      "downloadUrl": "{{ .Site.Params.app.github }}/releases",
+      "fileFormat": "ipa"
+    }
+  ]
+}
+</script>
+
+{{ else if eq .Type "faq" }}
+{{/* FAQ页面特定结构化数据 */}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "如何安装 {{ .Site.Params.app.name }}？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "根据您的操作系统，访问下载中心选择对应版本下载安装。Windows 用户下载 .exe 文件，macOS 用户下载 .dmg 文件，Linux 用户下载 .AppImage 文件。"
+      }
+    },
+    {
+      "@type": "Question", 
+      "name": "如何导入订阅链接？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "打开 {{ .Site.Params.app.name }} 应用，点击 '+' 按钮，选择 '从剪贴板导入' 或 '从 URL 导入'，粘贴您的订阅链接即可。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "连接失败怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer", 
+        "text": "请检查订阅是否有效、网络连接是否正常，尝试切换其他节点，或重启应用程序。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "支持哪些操作系统？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{{ .Site.Params.app.name }} 支持 Windows 10+、macOS 10.15+、Linux、Android 7.0+ 和 iOS 15.0+。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "如何选择最佳节点？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "使用延迟测试功能，选择延迟较低的节点。通常延迟低于 200ms 的节点性能较好。"
+      }
+    }
+  ]
+}
+</script>
+
+{{ else if eq .Type "about" }}
+{{/* 关于页面特定结构化数据 */}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "{{ .Title }}",
+  "description": "{{ .Description }}",
+  "url": "{{ .Permalink }}",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "{{ .Site.Params.author }}",
+    "url": "{{ .Site.BaseURL }}",
+    "logo": "{{ .Site.Params.app.logo | default "placeholder-app.svg" | absURL }}",
+    "description": "{{ .Site.Params.description }}",
+    "foundingDate": "2024",
+    "sameAs": [
+      "{{ .Site.Params.app.github }}",
+      "{{ .Site.Params.app.official_site }}"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "email": "{{ .Site.Params.contact.email }}",
+      "availableLanguage": "Chinese"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "CN"
+    },
+    "knowsAbout": [
+      "{{ .Site.Params.app.name }}",
+      "代理客户端",
+      "网络配置",
+      "开源软件",
+      "网络安全"
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Hiddify Next 服务",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "技术教程",
+            "description": "详细的安装和配置教程"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service", 
+            "name": "技术支持",
+            "description": "问题解答和技术支持"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "资源下载",
+            "description": "官方软件下载链接"
+          }
+        }
+      ]
+    }
+  }
+}
+</script>
+
+{{ else if eq .Section "guides" }}
+{{/* 教程相关页面的结构化数据 */}}
+{{ if .IsPage }}
+{{/* 单个教程文章页面 */}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "{{ .Title }}",
+  "description": "{{ .Description }}",
+  "image": "{{ .Site.Params.app.image | default "placeholder-app.svg" | absURL }}",
+  "author": {
+    "@type": "Organization",
+    "name": "{{ .Site.Params.author }}",
+    "url": "{{ .Site.BaseURL }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{ .Site.Params.author }}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ .Site.Params.app.image | default "placeholder-app.svg" | absURL }}"
+    }
+  },
+  "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+  "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ .Permalink }}"
+  },
+  "articleSection": "{{ with .Params.categories }}{{ index . 0 }}{{ end }}",
+  "keywords": "{{ with .Params.tags }}{{ delimit . ", " }}{{ end }}",
+  "inLanguage": "{{ .Site.LanguageCode }}",
+  "wordCount": "{{ .WordCount }}",
+  "timeRequired": "PT{{ .ReadingTime }}M",
+  "difficulty": "{{ with .Params.difficulty }}{{ . }}{{ else }}中等{{ end }}",
+  "about": [
+    {
+      "@type": "Thing",
+      "name": "{{ .Site.Params.app.name }}"
+    },
+    {
+      "@type": "Thing", 
+      "name": "代理客户端"
+    },
+    {
+      "@type": "Thing",
+      "name": "网络配置"
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "{{ .Site.Params.app.name }}",
+  "applicationCategory": "NetworkApplication",
+  "operatingSystem": "{{ with .Params.platforms }}{{ delimit . ", " }}{{ else }}Windows, macOS, Linux, Android, iOS{{ end }}",
+  "description": "安全、快速、开源的全平台代理客户端",
+  "url": "{{ .Site.Params.app.github }}",
+  "downloadUrl": "{{ .Site.Params.app.github }}/releases",
+  "softwareVersion": "{{ .Site.Params.downloads.latest_version }}",
+  "releaseNotes": "{{ .Site.Params.app.github }}/releases",
+  "author": {
+    "@type": "Organization",
+    "name": "Hiddify Next Team",
+    "url": "{{ .Site.Params.app.official_site }}"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "license": "{{ .Site.Params.app.github }}/blob/main/LICENSE"
+}
+</script>
+
+{{ else }}
+{{/* 教程中心列表页面 */}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "{{ .Title }}",
+  "description": "{{ .Description }}",
+  "url": "{{ .Permalink }}",
+  "mainEntity": {
+    "@type": "ItemList",
+    "name": "Hiddify Next 教程列表",
+    "description": "从入门到进阶的完整教程集合",
+    "itemListElement": [
+      {
+        "@type": "TechArticle",
+        "position": 1,
+        "name": "Windows 用户快速入门指南",
+        "url": "{{ .Site.BaseURL }}guides/windows-setup/",
+        "description": "详细的 Windows 系统 {{ .Site.Params.app.name }} 安装与配置教程",
+        "difficulty": "简单",
+        "timeRequired": "PT10M"
+      },
+      {
+        "@type": "TechArticle",
+        "position": 2,
+        "name": "macOS 用户快速入门指南", 
+        "url": "{{ .Site.BaseURL }}guides/macos-setup/",
+        "description": "适用于 Intel 和 Apple Silicon 芯片的 macOS 完整配置指南",
+        "difficulty": "简单",
+        "timeRequired": "PT10M"
+      },
+      {
+        "@type": "TechArticle",
+        "position": 3,
+        "name": "Linux 用户快速入门指南",
+        "url": "{{ .Site.BaseURL }}guides/linux-setup/",
+        "description": "适用于 Ubuntu、Debian、CentOS、Arch Linux 等发行版的完整配置指南",
+        "difficulty": "简单",
+        "timeRequired": "PT15M"
+      },
+      {
+        "@type": "TechArticle",
+        "position": 4,
+        "name": "Android 客户端设置指南",
+        "url": "{{ .Site.BaseURL }}guides/android-setup/",
+        "description": "Android 设备的完整配置流程，包括权限设置和网络优化",
+        "difficulty": "简单",
+        "timeRequired": "PT8M"
+      },
+      {
+        "@type": "TechArticle",
+        "position": 5,
+        "name": "iOS 客户端设置指南",
+        "url": "{{ .Site.BaseURL }}guides/ios-setup/",
+        "description": "适用于 iPhone 和 iPad 的完整配置流程，支持 iOS 15.0+ 系统",
+        "difficulty": "简单",
+        "timeRequired": "PT12M"
+      },
+      {
+        "@type": "TechArticle",
+        "position": 6,
+        "name": "必看：如何安全地导入订阅链接",
+        "url": "{{ .Site.BaseURL }}guides/subscription-setup/",
+        "description": "详细介绍订阅链接的导入方法、安全注意事项和常见问题解决方案",
+        "difficulty": "简单",
+        "timeRequired": "PT5M"
+      },
+      {
+        "@type": "TechArticle",
+        "position": 7,
+        "name": "关于分流规则：{{ .Site.Params.app.name }} 功能说明与替代方案",
+        "url": "{{ .Site.BaseURL }}guides/routing-rules/",
+        "description": "了解 {{ .Site.Params.app.name }} 的代理模式选择，以及支持高级分流规则的替代客户端推荐",
+        "difficulty": "中等",
+        "timeRequired": "PT8M"
+      }
+    ]
+  },
+  "about": [
+    {
+      "@type": "Thing",
+      "name": "{{ .Site.Params.app.name }}"
+    },
+    {
+      "@type": "Thing",
+      "name": "代理客户端配置"
+    },
+    {
+      "@type": "Thing", 
+      "name": "网络设置教程"
+    }
+  ],
+  "audience": {
+    "@type": "Audience",
+    "audienceType": "技术用户",
+    "educationalLevel": "初级到中级"
+  }
+}
+</script>
+{{ end }}
+
+{{ else if .IsPage }}
+{{/* 其他单页面的通用文章结构化数据 */}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ .Title }}",
+  "description": "{{ .Description }}",
+  "image": "{{ .Site.Params.app.image | default "placeholder-app.svg" | absURL }}",
+  "author": {
+    "@type": "Organization",
+    "name": "{{ .Site.Params.author }}",
+    "url": "{{ .Site.BaseURL }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{ .Site.Params.author }}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ .Site.Params.app.image | default "placeholder-app.svg" | absURL }}"
+    }
+  },
+  "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+  "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ .Permalink }}"
+  },
+  "articleSection": "{{ with .Params.categories }}{{ index . 0 }}{{ end }}",
+  "keywords": "{{ with .Params.tags }}{{ delimit . ", " }}{{ end }}",
+  "inLanguage": "{{ .Site.LanguageCode }}",
+  "wordCount": "{{ .WordCount }}"
+}
+</script>
+
+{{ end }}

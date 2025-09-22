@@ -1,0 +1,110 @@
+baseURL: 'https://example.com'
+languageCode: 'zh-CN'
+title: 'My App Guide'
+theme: 'appguide'
+
+params:
+  # 网站基本信息
+  description: '我的应用程序官方指南和下载中心'
+  author: 'My App Team'
+  
+  # 应用信息
+  app:
+    name: "Your App Name"
+    tagline: "Your app tagline"
+    github: "https://github.com/kxnotes/hugo-appguide-theme"
+    official_site: "https://hiddify.com"
+    play_store_url: "https://play.google.com/store/apps/details?id=xxxxx"
+    app_store_url: "https://apps.apple.com/app/hiddify-next/idxxxxxx"
+    logo: "placeholder-app.svg"
+    image: "placeholder-app.svg"
+    screenshot: "placeholder-app.svg"
+    favicon: "/favicon.ico"
+    
+  # 网站特性
+  features:
+    - icon: '🚀'
+      title: '快速启动'
+      description: '几秒钟内即可完成安装和配置，开始使用我们的应用程序。'
+    - icon: '🔒'
+      title: '安全可靠'
+      description: '采用最新的安全技术，保护您的数据和隐私安全。'
+    - icon: '🌐'
+      title: '跨平台支持'
+      description: '支持 Windows, macOS, Linux, Android, iOS 等主流平台。'
+  
+  # 下载信息
+  downloads:
+    latest_version: 'v1.0.0'
+    release_date: '2024-01-01'
+    platforms:
+      - name: 'Windows (x64)'
+        icon: '🖥️'
+        description: 'Windows 10/11'
+        files:
+          - type: 'exe'
+            label: '下载 .exe'
+          - type: 'zip'
+            label: '下载 .zip'
+      - name: 'macOS (Apple Silicon)'
+        icon: '🍎'
+        description: 'M1/M2/M3 芯片'
+        files:
+          - type: 'dmg'
+            label: '下载 .dmg'
+      - name: 'Android'
+        icon: '📱'
+        description: 'Android 7.0+'
+        files:
+          - type: 'apk'
+            label: 'GitHub 下载 .apk'
+          - type: 'play'
+            label: 'Google Play'
+  
+  # 联系信息
+  contact:
+    email: 'contact@example.com'
+    github_issues: 'https://github.com/myorg/myapp/issues'
+    github_discussions: 'https://github.com/myorg/myapp/discussions'
+  
+  # 网站设置
+  site:
+    is_official: false
+    copyright_year: 2024
+    license: 'CC BY-SA 4.0'
+    license_url: 'https://creativecommons.org/licenses/by-sa/4.0/'
+
+# 菜单配置
+menu:
+  main:
+    - name: '主页'
+      url: '/'
+      weight: 10
+    - name: '下载中心'
+      url: '/download/'
+      weight: 20
+    - name: '教程中心'
+      url: '/guides/'
+      weight: 30
+    - name: '常见问题'
+      url: '/faq/'
+      weight: 40
+    - name: '关于本站'
+      url: '/about/'
+      weight: 50
+
+# 内容配置
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    style: github
+    lineNos: true
+
+# 分类法
+taxonomies:
+  category: categories
+  tag: tags
+  difficulty: difficulties
+  platform: platforms

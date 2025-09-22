@@ -1,0 +1,20 @@
+<!-- 页脚 -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="text-gray-300">
+            <p>&copy; {{ .Site.Params.site.copyright_year | default now.Year }} {{ .Site.BaseURL | replaceRE "https?://" "" | replaceRE "/$" "" }}</p>
+            {{ if not .Site.Params.site.is_official }}
+            <p class="text-sm opacity-80">一个非官方的 {{ .Site.Params.app.name }} 资源与指南网站。</p>
+            {{ end }}
+        </div>
+        <div class="footer-links">
+            <a href="/about/">关于本站</a>
+            {{ with .Site.Params.app.github }}
+            <a href="{{ . }}" target="_blank" rel="noopener">官方 GitHub</a>
+            {{ end }}
+            {{ if .Site.GetPage "/changelog" }}
+            <a href="/changelog/">更新日志</a>
+            {{ end }}
+        </div>
+    </div>
+</footer>

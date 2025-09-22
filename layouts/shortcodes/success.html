@@ -1,0 +1,4 @@
+<div class="success-box">
+    <h4>🎉 {{ .Get "title" | default "成功" }}</h4>
+    {{ .Inner | markdownify }}
+</div>

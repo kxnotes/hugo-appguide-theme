@@ -1,0 +1,30 @@
+name: 'AppGuide'
+license: 'MIT'
+licenselink: 'https://github.com/kxnotes/hugo-appguide-theme/blob/main/LICENSE'
+description: 'A modern, responsive Hugo theme designed for app guide websites with download center, tutorials, and FAQ sections'
+homepage: 'https://github.com/kxnotes/hugo-appguide-theme'
+tags:
+  - app
+  - documentation
+  - guides
+  - responsive
+  - modern
+  - tailwindcss
+  - download
+  - tutorial
+  - faq
+features:
+  - Responsive design with Tailwind CSS
+  - App download center with platform detection
+  - Comprehensive tutorial system
+  - Interactive FAQ section
+  - SEO optimized with structured data
+  - Configurable app information
+  - Multiple content types support
+  - Automatic checksum verification
+  - Multi-platform support (iOS, Android, Windows, macOS, Linux)
+min_version: '0.112.0'
+
+author:
+  name: 'KX Notes'
+  homepage: 'https://github.com/kxnotes'
